@@ -80,6 +80,9 @@ let nlpRouteTest = async (name, route) => {
 }
 
 let testRoutes = []
+if (utils.parseBoolean(process.env.OPENAI_ENABLED)) {
+    testRoutes.push(['OpenAI', process.env.API_ROUTE_NLP_OPENAI])
+}
 if (utils.parseBoolean(process.env.DIALOGFLOW_ENABLED)) {
     testRoutes.push(['Dialogflow', process.env.API_ROUTE_NLP_DIALOGFLOW])
 }
