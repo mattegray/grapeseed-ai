@@ -1,0 +1,9 @@
+# Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
+version: v1.14.1
+# ignores vulnerabilities until expiry date; change duration by modifying expiry date
+ignore:
+  SNYK-JS-NODEFETCH-674311:
+    - botframework-directlinejs > cross-fetch > node-fetch:
+        reason: No patch available
+        expires: '2020-10-22T22:27:01.956Z'
+patch: {}

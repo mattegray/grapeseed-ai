@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <title>Digital Human Node Example</title>
+    <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="style.css"/>
+    <script src="bundle.js" async></script>
+
+</head>
+<body>
+
+    <!-- Button to begin. Get's a session token and starts a digital human session. -->
+    <button id="start-btn">Start Digital Human</button>
+
+    <!-- Button to end session. -->
+    <button id="end-btn">End Session</button>
+
+    <!-- msg and prompt are used for onscreen prompts and are not specific to digital human functionality -->
+    <div id="msg" class="msg-display"></div>
+    <div id="prompt" class="msg-display">Hold <b>space</b> to speak</div>
+
+    <!--
+    local-video-container and digital-human-video-container are both passed into the Uneeq class via
+    UneeqOptions. Using CSS these elements can be displayed, hidden, moved, resize, etc. However, they should
+    not be removed and re-added onto the DOM.
+
+    local-video-container: The div element where the user's local video stream will be added.
+    digital-human-video-container: The div element where the digital human's video stream will be added
+    -->
+    <div id="local-video-container"></div>
+    <div id="digital-human-video-container"></div>
+
+    <!--
+    We will use this element to display the text of what the digital human has spoke. HTML content returned
+    from the NLP could also be displayed here.
+    -->
+    <div id="transcript"></div>
+
+    <!-- This element will be used to display the transcript of what the user has spoken. -->
+    <div id="local-transcript"></div>
+
+</body>
+</html>
