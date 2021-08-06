@@ -15,6 +15,7 @@ function initialiseRoutePaths() {
     let isLexEnabled = utils.parseBoolean(process.env.LEX_ENABLED)
     let isWolframEnabled = utils.parseBoolean(process.env.WOLFRAM_ENABLED)
     let isDirectlineEnabled = utils.parseBoolean(process.env.DIRECTLINE_ENABLED)
+    let isOpenAIEnabled = utils.parseBoolean(process.env.OPENAI_ENABLED)
 
     let isTokenEnabled = utils.parseBoolean(process.env.TOKEN_ROUTE_ENABLED)
     let isParrotEnabled = utils.parseBoolean(process.env.PARROT_ROUTE_ENABLED)
@@ -52,6 +53,10 @@ function initialiseRoutePaths() {
     if (isDirectlineEnabled && !process.env.API_ROUTE_NLP_DIRECTLINE) {
         logger.info('No Directline route configured - using default /directline')
         process.env.API_ROUTE_NLP_DIRECTLINE = '/directline'
+    }
+    if (isOpenAIEnabled && !process.env.API_ROUTE_NLP_OPENAI) {
+        logger.info('No OpenAI route configured - using default /oepnai')
+        process.env.API_ROUTE_NLP_OPENAI = '/openai'
     }
 
     if (utils.parseBoolean(process.env.AUTHORIZATION_REQUIRED)) {
@@ -262,6 +267,21 @@ function isValidDirectlineConfig() {
     }
 }
 
+function isValidOpenAIConfig() {
+    try {
+        if (utils.parseBoolean(process.env.OPENAI_ENABLED)) {
+            if (!process.env.OPENAI_API_KEY) {
+                throw new Error('No OpenAI key configured')
+            }
+        } else {
+            throw new Error('OpenAI not enabled')
+        }
+        return true
+    } catch (error) {
+        throw error
+    }
+}
+
 function isValidTokenConfig() {
     try {
         if (utils.parseBoolean(process.env.TOKEN_ROUTE_ENABLED)) {
@@ -316,6 +336,7 @@ module.exports = {
     isValidWatsonConfig,
     isValidWolframConfig,
     isValidDirectlineConfig,
+    isValidOpenAIConfig,
     isValidTokenConfig,
     isValidSpeakConfig,
 }

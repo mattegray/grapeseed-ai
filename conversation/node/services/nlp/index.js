@@ -1,3 +1,4 @@
+const openai = require('./openai')
 const dialogflow = require('./dialogflow/es')
 const dialogflowCX = require('./dialogflow/cx')
 const lex = require('./lex')
@@ -16,8 +17,10 @@ let lexAPIPath = rootAPIPath + process.env.API_ROUTE_NLP_LEX
 let watsonAPIPath = rootAPIPath + process.env.API_ROUTE_NLP_WATSON
 let wolframAPIPath = rootAPIPath + process.env.API_ROUTE_NLP_WOLFRAM
 let directlineAPIPath = rootAPIPath + process.env.API_ROUTE_NLP_DIRECTLINE
+let openaiAPIPath = rootAPIPath + process.env.API_ROUTE_NLP_OPENAI
 
 const routeModules = [
+    { route: openaiAPIPath, configCheck: loaders.isValidOpenAIConfig, queryMethod: openai.query },
     { route: dialogflowAPIPath, configCheck: loaders.isValidDialogflowConfig, queryMethod: dialogflow.query },
     { route: dialogflowCXAPIPath, configCheck: loaders.isValidDialogflowCXConfig, queryMethod: dialogflowCX.query },
     { route: lexAPIPath, configCheck: loaders.isValidLexConfig, queryMethod: lex.query },
