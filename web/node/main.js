@@ -13,13 +13,13 @@ const GET_TOKEN_URL = 'http://localhost:3000/token'; // get token URL from node 
 The UneeQ server to connect to.
 This value should be the same as the one used when generating a token (above).
  */
-const UNEEQ_URL = 'https://api.au.uneeq.io'; // example UneeQ URL (Australia)
+const UNEEQ_URL = 'https://api.us.uneeq.io';
 
 /*
 The UneeQ conversation identifier.
 This value should be the same as the one used when generating a token (above).
  */
-const UNEEQ_CONVERSATION_ID = '79ba1d74-3c1f-498e-867b-2b464ec965c1'; // example conversation id only
+const UNEEQ_CONVERSATION_ID = '15ab68c3-e735-456b-965b-839d474a3524';
 
 const msgDisplay = document.getElementById('msg');
 
