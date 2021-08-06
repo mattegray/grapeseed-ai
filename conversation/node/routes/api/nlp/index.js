@@ -16,6 +16,7 @@ const methodNotAllowed = (req, res, next) => {
  * This is preferring that requests to routes that have not been configured result in a 404 and not an application error
  * POST requests route to the controller, all other methods raise 405 error */
 const nlpRoutes = [
+    { route: process.env.API_ROUTE_NLP_OPENAI, enabled: utils.parseBoolean(process.env.OPENAI_ENABLED) },
     { route: process.env.API_ROUTE_NLP_DIALOGFLOW, enabled: utils.parseBoolean(process.env.DIALOGFLOW_ENABLED) },
     { route: process.env.API_ROUTE_NLP_DIALOGFLOWCX, enabled: utils.parseBoolean(process.env.DIALOGFLOWCX_ENABLED) },
     { route: process.env.API_ROUTE_NLP_LEX, enabled: utils.parseBoolean(process.env.LEX_ENABLED) },
