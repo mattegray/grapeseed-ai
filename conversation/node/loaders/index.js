@@ -55,7 +55,7 @@ function initialiseRoutePaths() {
         process.env.API_ROUTE_NLP_DIRECTLINE = '/directline'
     }
     if (isOpenAIEnabled && !process.env.API_ROUTE_NLP_OPENAI) {
-        logger.info('No OpenAI route configured - using default /oepnai')
+        logger.info('No OpenAI route configured - using default /openai')
         process.env.API_ROUTE_NLP_OPENAI = '/openai'
     }
 
