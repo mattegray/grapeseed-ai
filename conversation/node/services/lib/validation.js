@@ -6,6 +6,7 @@
  * @returns {boolean}
  */
 let isValidRequestJSON = (body) => {
+    console.log(body)
     try {
         /* The specification for the UneeQ request JSON defines five fields:
          *
