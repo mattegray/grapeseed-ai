@@ -113,6 +113,7 @@ function startDigitalHuman() {
     uneeqInstance = new uneeqPackage.Uneeq({
         url: UNEEQ_URL,
         conversationId: UNEEQ_CONVERSATION_ID,
+        playWelcome: true,
         avatarVideoContainerElement: document.getElementById('digital-human-video-container'),
         localVideoContainerElement: document.getElementById('local-video-container'),
         messageHandler: (msg) => messageHandler(msg),
