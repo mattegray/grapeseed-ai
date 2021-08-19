@@ -93,6 +93,12 @@ function messageHandler(msg) {
             break;
 
 
+        case 'AvatarAnswerContent':
+
+            // Add element onto the screen
+            document.getElementById('iframe').append(msg.content);
+
+
         default:
 
             // Additional messages sent by uneeq-js that can be handled.
