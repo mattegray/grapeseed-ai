@@ -19,7 +19,8 @@ const UNEEQ_URL = 'https://api.us.uneeq.io';
 The UneeQ conversation identifier.
 This value should be the same as the one used when generating a token (above).
  */
-const UNEEQ_CONVERSATION_ID = '15ab68c3-e735-456b-965b-839d474a3524';
+// const UNEEQ_CONVERSATION_ID = '15ab68c3-e735-456b-965b-839d474a3524';
+const UNEEQ_CONVERSATION_ID = '1495a3d9-56ee-4c7b-a55b-4e9c71a2c644';
 
 const msgDisplay = document.getElementById('msg');
 
@@ -96,7 +97,8 @@ function messageHandler(msg) {
         case 'AvatarAnswerContent':
 
             // Add element onto the screen
-            document.getElementById('iframe').append(msg.content);
+            document.getElementById('iframe').contentWindow.postMessage('next','*');
+            break;
 
 
         default:
