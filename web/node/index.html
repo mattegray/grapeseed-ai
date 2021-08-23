@@ -30,7 +30,10 @@
     digital-human-video-container: The div element where the digital human's video stream will be added
     -->
     <div id="local-video-container"></div>
-    <div id="digital-human-video-container"></div>
+    <div class="row">
+        <div id="digital-human-video-container" class="column left"></div>
+        <iframe id="iframe" src="./content.html" class="column right"></iframe>
+    </div>
 
     <!--
     We will use this element to display the text of what the digital human has spoke. HTML content returned
