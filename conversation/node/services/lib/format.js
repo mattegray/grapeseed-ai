@@ -51,8 +51,7 @@ let parseInstructions = (response) => {
 
         /* If present, displayHtml must contain an 'html' field */
         if (responseInstructions.hasOwnProperty('displayHtml')) {
-            // let displayHtml = JSON.parse(responseInstructions.displayHtml)
-            let displayHtml = responseInstructions.displayHtml
+            let displayHtml = JSON.parse(responseInstructions.displayHtml)
             if (displayHtml.hasOwnProperty('html')) {
                 instructions.displayHtml = displayHtml
                 logger.debug(`Parsed a displayHtml payload: ${JSON.stringify(displayHtml)}`)
