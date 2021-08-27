@@ -4,25 +4,6 @@ body {
     background-color: black;
     font-family: 'Roboto', Arial, sans-serif;
 }
-* {
-    box-sizing: border-box;
-    border: black;
-}
-
-/* Create two unequal columns that floats next to each other */
-.column {
-    float: left;
-}
-
-.left {
-    width: 30%;
-    height: 500px;
-}
-
-.right {
-    width: 70%;
-    height: 670px;
-}
 
 #local-video-container {
     display: none;
@@ -72,6 +53,7 @@ body {
     position: absolute;
     margin: 20px;
     font-size: 20px;
+    z-index: 9;
 }
 
 #end-btn {
