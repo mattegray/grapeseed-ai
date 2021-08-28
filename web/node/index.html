@@ -4,18 +4,23 @@
 
     <meta charset="UTF-8">
     <title>Digital Human Node Example</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon">
     <link rel="stylesheet" type="text/css" href="style.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
     <script src="bundle.js" async></script>
 
 </head>
 <body>
 
     <!-- Button to begin. Get's a session token and starts a digital human session. -->
-    <button id="start-btn">Start Digital Human</button>
+    <button id="start-btn" type="button" class="btn btn-outline-secondary">Start Digital Human</button>
 
     <!-- Button to end session. -->
-    <button id="end-btn">End Session</button>
+    <button id="end-btn" type="button" class="btn btn-outline-secondary">End Session</button>
 
     <!-- msg and prompt are used for onscreen prompts and are not specific to digital human functionality -->
     <div id="msg" class="msg-display"></div>
@@ -30,9 +35,11 @@
     digital-human-video-container: The div element where the digital human's video stream will be added
     -->
     <div id="local-video-container"></div>
-    <div class="row">
-        <div id="digital-human-video-container" class="column left"></div>
-        <iframe id="iframe" src="./content.html" class="column right"></iframe>
+    <div class="container-fluid" style="padding-right: 0px; padding-left: 0px">
+        <div class="row row-no-gutters">
+            <div id="digital-human-video-container" class="col-sm-4" style="height: 620px"></div>
+            <iframe id="iframe" src="./content.html" class="col-sm-8" style="height: 620px"></iframe>
+        </div>
     </div>
 
     <!--
@@ -43,6 +50,23 @@
 
     <!-- This element will be used to display the transcript of what the user has spoken. -->
     <div id="local-transcript"></div>
+
+    <!-- Button group for navigating lesson -->
+    <div class="text-center">
+        <div class="btn-group" style="margin-top: 0px">
+            <button id="welcome" type="button" class="btn btn-primary" onclick="document.getElementById('iframe').contentWindow.showPage(0)">Welcome</button>
+            <button id="seven-good-days" type="button" class="btn btn-primary" onclick="document.getElementById('iframe').contentWindow.showPage(1)">Seven Good Days</button>
+            <button id="the-sun" type="button" class="btn btn-primary" onclick="document.getElementById('iframe').contentWindow.showPage(10)">The Sun</button>
+            <button id="three-eggs" type="button" class="btn btn-primary" onclick="document.getElementById('iframe').contentWindow.showPage(12)">Three Eggs</button>
+            <button id="what-is-that" type="button" class="btn btn-primary" onclick="document.getElementById('iframe').contentWindow.showPage(16)">What is That?</button>
+            <button id="betty-bird" type="button" class="btn btn-primary" onclick="document.getElementById('iframe').contentWindow.showPage(22)">Betty Bird</button>
+            <button id="january-to-december" type="button" class="btn btn-primary" onclick="document.getElementById('iframe').contentWindow.showPage(32)">January to December</button>
+            <button id="ten" type="button" class="btn btn-primary" onclick="document.getElementById('iframe').contentWindow.showPage(42)">Ten</button>
+            <button id="the-ball-game" type="button" class="btn btn-primary" onclick="document.getElementById('iframe').contentWindow.showPage(48)">The Ball Game</button>
+            <button id="phonogram" type="button" class="btn btn-primary" onclick="document.getElementById('iframe').contentWindow.showPage(63)">Phonogram / Word Cards</button>
+            <button id="goodbye" type="button" class="btn btn-primary" onclick="document.getElementById('iframe').contentWindow.showPage(0)">Goodbye</button>
+        </div>
+    </div>
 
 </body>
 </html>
