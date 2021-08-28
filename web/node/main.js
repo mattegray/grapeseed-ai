@@ -19,15 +19,28 @@ const UNEEQ_URL = 'https://api.us.uneeq.io';
 The UneeQ conversation identifier.
 This value should be the same as the one used when generating a token (above).
  */
-// const UNEEQ_CONVERSATION_ID = '15ab68c3-e735-456b-965b-839d474a3524';
-const UNEEQ_CONVERSATION_ID = '1495a3d9-56ee-4c7b-a55b-4e9c71a2c644';
+const UNEEQ_CONVERSATION_ID = '15ab68c3-e735-456b-965b-839d474a3524';
+// const UNEEQ_CONVERSATION_ID = '1495a3d9-56ee-4c7b-a55b-4e9c71a2c644';
 
 const msgDisplay = document.getElementById('msg');
+const iframe = document.getElementById('iframe');
 
 let uneeqInstance;
 
 document.getElementById('start-btn').addEventListener( 'click', startDigitalHuman);
 document.getElementById('end-btn').addEventListener( 'click', endSession);
+
+document.getElementById('welcome').addEventListener('click', ()=>uneeqInstance.sendTranscript('WELCOME'));
+document.getElementById('seven-good-days').addEventListener('click', ()=>uneeqInstance.sendTranscript('SevenGoodDays'));
+document.getElementById('the-sun').addEventListener('click', ()=>uneeqInstance.sendTranscript('TheSun'));
+document.getElementById('three-eggs').addEventListener('click', ()=>uneeqInstance.sendTranscript('ThreeEggs'));
+document.getElementById('what-is-that').addEventListener('click', ()=>uneeqInstance.sendTranscript('WhatIsThat'));
+document.getElementById('betty-bird').addEventListener('click', ()=>uneeqInstance.sendTranscript('BettyBird'));
+document.getElementById('january-to-december').addEventListener('click', ()=>uneeqInstance.sendTranscript('JanuarytoDecember'));
+document.getElementById('ten').addEventListener('click', ()=>uneeqInstance.sendTranscript('TEN'));
+document.getElementById('the-ball-game').addEventListener('click', ()=>uneeqInstance.sendTranscript('TheBallGame'));
+document.getElementById('phonogram').addEventListener('click', ()=>uneeqInstance.sendTranscript('PhonogramWords'));
+document.getElementById('goodbye').addEventListener('click', ()=>uneeqInstance.sendTranscript('GOODBYE'));
 
 // Add push to talk key listeners
 function addPTTKeyListeners() {
@@ -91,13 +104,12 @@ function messageHandler(msg) {
 
             // Add the new element onto the screen
             document.getElementById('transcript').innerHTML = 'Digital Human: ' + msg.answerSpeech;
-            break;
-
-
-        case 'AvatarAnswerContent':
-
-            // Add element onto the screen
-            document.getElementById('iframe').contentWindow.postMessage('next','*');
+            if (msg.answer.includes("*")) {
+                iframe.contentWindow.postMessage('next','*');
+            }
+            if (msg.answer.includes("^")) {
+                iframe.contentWindow.postMessage('play','*');
+            }
             break;
 
 
