@@ -9,10 +9,8 @@
 </style>
 <body>
 
-
 <div class="w3-content w3-display-container">
     <img class="mySlides" src="./assets/welcome.png" style="width: 100%">
-
     <img class="mySlides" src="./assets/01-sunday.png" style="width: 100%">
     <img class="mySlides" src="./assets/02-monday.png" style="width: 100%">
     <img class="mySlides" src="./assets/03-tuesday.png" style="width: 100%">
@@ -21,10 +19,13 @@
     <img class="mySlides" src="./assets/06-friday.png" style="width: 100%">
     <img class="mySlides" src="./assets/07-saturday.png" style="width: 100%">
     <img class="mySlides" src="./assets/08-weeks.png" style="width: 100%">
-    <img class="mySlides" src="./assets/09-seven-good-days.png" style="width: 100%">
+    <img class="mySlides" src="./assets/09-seven-good-days.png" onclick="play('seven-good-days')" style="width: 100%">
+    <audio id="seven-good-days" src="assets/mp3/seven-good-days.mp3"></audio>
+    <video class="mySlides" src="./assets/mp4/the-sun.mp4" controls style="width: 100%"></video>
     <img class="mySlides" src="./assets/10-the-sun.png" style="width: 100%">
     <img class="mySlides" src="./assets/11-pop.png" style="width: 100%">
     <img class="mySlides" src="./assets/12-spring.png" style="width: 100%">
+    <video class="mySlides" src="./assets/mp4/three-eggs.mp4" controls style="width: 100%"></video>
     <img class="mySlides" src="./assets/13-three-eggs.png" style="width: 100%">
     <img class="mySlides" src="./assets/14-three-eggs.png" style="width: 100%">
     <img class="mySlides" src="./assets/16-what-is-that.png" style="width: 100%">
@@ -36,7 +37,7 @@
     <img class="mySlides" src="./assets/22-change.png" style="width: 100%">
     <img class="mySlides" src="./assets/23-nest.png" style="width: 100%">
     <img class="mySlides" src="./assets/24-betty-bird.png" onclick="play('betty-bird')" style="width: 100%">
-    <audio id="betty-bird" src="assets/betty-bird.mp3"></audio>
+    <audio id="betty-bird" src="assets/mp3/betty-bird.mp3"></audio>
     <img class="mySlides" src="./assets/25-betty-bird.png" style="width: 100%">
     <img class="mySlides" src="./assets/26-betty-bird.png" style="width: 100%">
     <img class="mySlides" src="./assets/27-betty-bird.png" style="width: 100%">
@@ -50,12 +51,14 @@
     <img class="mySlides" src="./assets/35-spring.png" style="width: 100%">
     <img class="mySlides" src="./assets/36-summer.png" style="width: 100%">
     <img class="mySlides" src="./assets/37-winter.png" style="width: 100%">
-    <img class="mySlides" src="./assets/38-january-to-december.png" style="width: 100%">
+    <img class="mySlides" src="./assets/38-january-to-december.png" onclick="play('january-to-december')" style="width: 100%">
+    <audio id="january-to-december" src="assets/mp3/january-to-december.mp3"></audio>
     <img class="mySlides" src="./assets/39-january-to-december.png" style="width: 100%">
     <img class="mySlides" src="./assets/40-january-to-december.png" style="width: 100%">
     <img class="mySlides" src="./assets/41-january-to-december.png" style="width: 100%">
     <img class="mySlides" src="./assets/42-hole.png" style="width: 100%">
-    <img class="mySlides" src="./assets/43-ten.png" style="width: 100%">
+    <img class="mySlides" src="./assets/43-ten.png" onclick="play('ten')" style="width: 100%">
+    <audio id="ten" src="assets/mp3/ten.mp3"></audio>
     <img class="mySlides" src="./assets/44-ten.png" style="width: 100%">
     <img class="mySlides" src="./assets/45-ten.png" style="width: 100%">
     <img class="mySlides" src="./assets/46-ten.png" style="width: 100%">
@@ -108,30 +111,27 @@
     <img class="mySlides" src="./assets/93-window.png" style="width: 100%">
     <img class="mySlides" src="./assets/94-ow.png" style="width: 100%">
 
-    <video class="mySlides" src="./assets/10-the-sun-video.mp4" controls style="width: 100%"></video>
-    <audio class="mySlides" src="./assets/betty-bird.mp3" controls style="margin: 0 auto"></audio>
-
-    <button class="w3-button w3-black w3-display-left" onclick="plusDivs(-1)">&#10094;</button>
-    <button class="w3-button w3-black w3-display-right" onclick="plusDivs(1)">&#10095;</button>
+<!--    <button class="w3-button w3-black w3-display-left" onclick="plusDivs(-1)">&#10094;</button>-->
+<!--    <button class="w3-button w3-black w3-display-right" onclick="plusDivs(1)">&#10095;</button>-->
 </div>
 
 <script>
-    var slideIndex = 1;
-    showDivs(slideIndex);
+    let slideIndex = 0;
+    showPage(slideIndex);
 
     function plusDivs(n) {
-        showDivs(slideIndex += n);
+        showPage(slideIndex += n);
     }
 
-    function showDivs(n) {
-        var i;
-        var x = document.getElementsByClassName("mySlides");
-        if (n > x.length) {slideIndex = 1}
-        if (n < 1) {slideIndex = x.length}
-        for (i = 0; i < x.length; i++) {
-            x[i].style.display = "none";
+    function showPage(n) {
+        let slides = document.getElementsByClassName('mySlides')
+        if (n > slides.length) {slideIndex = 0}
+        if (n < 0) {slideIndex = slides.length}
+        for (let i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
         }
-        x[slideIndex-1].style.display = "block";
+        slides[n].style.display = 'block';
+        slideIndex = n;
     }
 
     function play(song){
@@ -139,11 +139,13 @@
     }
 
     window.onmessage = function(e) {
-        if (e.data == 'next') {
+        if (e.data === 'next') {
             plusDivs(1);
         }
+        if (e.data === 'play') {
+            play();
+        }
     };
-
 
 </script>
 
