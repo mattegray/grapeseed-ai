@@ -74,7 +74,8 @@ body {
     position: absolute;
     left: 20px;
     bottom: 20px;
-    padding: 10px 4px
+    padding: 10px 4px;
+    display: none
 }
 
 #local-transcript {

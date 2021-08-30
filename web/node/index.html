@@ -39,12 +39,15 @@
         <div class="row row-no-gutters">
             <div id="digital-human-video-container" class="col-sm-4" style="height: 620px"></div>
             <iframe id="iframe" src="./content.html" class="col-sm-8" style="height: 620px"></iframe>
+
         </div>
         <ul class="pager" style="position: fixed; top: 0px; right: 20px">
             <li class="previous" style="display: none"><a href="#">Previous</a></li>
             <li id="next" class="next"><a href="#">Next</a></li>
         </ul>
     </div>
+
+<!--    <button type="button" class="btn btn-success" style="position: absolute; top: 600px; left: 12%">Start Lesson</button>-->
 
     <!--
     We will use this element to display the text of what the digital human has spoke. HTML content returned
@@ -57,17 +60,17 @@
 
     <!-- Button group for navigating lesson -->
     <div class="text-center">
-        <div class="btn-group" style="margin-top: 0px">
+        <div class="btn-group" style="margin-top: 20px">
             <button id="welcome" type="button" class="btn btn-primary" onclick="document.getElementById('iframe').contentWindow.showPage(0)">Welcome</button>
             <button id="seven-good-days" type="button" class="btn btn-primary" onclick="document.getElementById('iframe').contentWindow.showPage(1)">Seven Good Days</button>
             <button id="the-sun" type="button" class="btn btn-primary" onclick="document.getElementById('iframe').contentWindow.showPage(10)">The Sun</button>
             <button id="three-eggs" type="button" class="btn btn-primary" onclick="document.getElementById('iframe').contentWindow.showPage(12)">Three Eggs</button>
-            <button id="what-is-that" type="button" class="btn btn-primary" onclick="document.getElementById('iframe').contentWindow.showPage(16)">What is That?</button>
-            <button id="betty-bird" type="button" class="btn btn-primary" onclick="document.getElementById('iframe').contentWindow.showPage(22)">Betty Bird</button>
-            <button id="january-to-december" type="button" class="btn btn-primary" onclick="document.getElementById('iframe').contentWindow.showPage(32)">January to December</button>
-            <button id="ten" type="button" class="btn btn-primary" onclick="document.getElementById('iframe').contentWindow.showPage(42)">Ten</button>
-            <button id="the-ball-game" type="button" class="btn btn-primary" onclick="document.getElementById('iframe').contentWindow.showPage(48)">The Ball Game</button>
-            <button id="phonogram" type="button" class="btn btn-primary" onclick="document.getElementById('iframe').contentWindow.showPage(63)">Phonogram / Word Cards</button>
+            <button id="what-is-that" type="button" class="btn btn-primary" onclick="document.getElementById('iframe').contentWindow.showPage(17)">What is That?</button>
+            <button id="betty-bird" type="button" class="btn btn-primary" onclick="document.getElementById('iframe').contentWindow.showPage(23)">Betty Bird</button>
+            <button id="january-to-december" type="button" class="btn btn-primary" onclick="document.getElementById('iframe').contentWindow.showPage(33)">January to December</button>
+            <button id="ten" type="button" class="btn btn-primary" onclick="document.getElementById('iframe').contentWindow.showPage(43)">Ten</button>
+            <button id="the-ball-game" type="button" class="btn btn-primary" onclick="document.getElementById('iframe').contentWindow.showPage(49)">The Ball Game</button>
+            <button id="phonogram" type="button" class="btn btn-primary" onclick="document.getElementById('iframe').contentWindow.showPage(64)">Phonogram / Word Cards</button>
             <button id="goodbye" type="button" class="btn btn-primary" onclick="document.getElementById('iframe').contentWindow.showPage(0)">Goodbye</button>
         </div>
     </div>
