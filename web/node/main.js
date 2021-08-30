@@ -30,6 +30,8 @@ let uneeqInstance;
 document.getElementById('start-btn').addEventListener( 'click', startDigitalHuman);
 document.getElementById('end-btn').addEventListener( 'click', endSession);
 
+document.getElementById('next').addEventListener("click", ()=>uneeqInstance.sendTranscript('next'));
+
 document.getElementById('welcome').addEventListener('click', ()=>uneeqInstance.sendTranscript('WELCOME'));
 document.getElementById('seven-good-days').addEventListener('click', ()=>uneeqInstance.sendTranscript('SevenGoodDays'));
 document.getElementById('the-sun').addEventListener('click', ()=>uneeqInstance.sendTranscript('TheSun'));
