@@ -175,7 +175,7 @@ async function iterateResponses(component, utterances, n) {
         response = "Alright, great work. *"
         conversationPayload.component = components[n+1]
         if (conversationPayload.component === 'GOODBYE') {
-            response = "Great work! That's it for today!"
+            response = "Great work! That's it for today! *"
         }
     }
     return response
