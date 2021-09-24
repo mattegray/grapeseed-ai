@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<title>Unit 10 Lesson 1</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<style>
+    .mySlides {
+        display: none;
+    }
+</style>
+<body>
+
+<div style="width: 100%">
+    <video class="mySlides" src="./assets/seven-good-days.mp4" style="width: 100%"></video>
+    <video class="mySlides" src="./assets/the-sun.mp4" style="width: 100%"></video>
+    <video class="mySlides" src="./assets/fun-and-balloons.mp4" style="width: 100%"></video>
+    <video class="mySlides" src="./assets/what-is-that.mp4" style="width: 100%"></video>
+    <video class="mySlides" src="./assets/betty-bird.mp4" style="width: 100%"></video>
+
+
+    <!--    <button class="w3-button w3-black w3-display-left" onclick="plusDivs(-1)">&#10094;</button>-->
+    <!--    <button class="w3-button w3-black w3-display-right" onclick="plusDivs(1)">&#10095;</button>-->
+</div>
+
+<script>
+    window.uneeqInteractionsOptions = {
+        personaShareId: "66db381f-0b45-4c09-9396-5e465948d4c9",
+        enableTransparentBackground: false,
+        callToActionText: "Hi",
+        errorText: "Sorry! I'm not available right now. Please try again soon.",
+        playWelcome: false,
+        verboseLogging: false
+    }
+
+    let slideIndex = 0;
+    showPage(slideIndex);
+
+    function plusDivs(n) {
+        showPage(slideIndex += n);
+    }
+
+    function showPage(n) {
+        let slides = document.getElementsByClassName('mySlides')
+        if (n > slides.length) {
+            slideIndex = 0
+        }
+        if (n < 0) {
+            slideIndex = slides.length
+        }
+        for (let i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+        }
+        slides[n].style.display = 'block';
+        slideIndex = n;
+    }
+
+    function play(song) {
+        document.getElementById(song).play();
+    }
+
+    window.onmessage = function (e) {
+        if (e.data === 'next') {
+            plusDivs(1);
+        }
+        if (e.data === 'play') {
+            play();
+        }
+    };
+
+</script>
+<script src="https://hosted.us.uneeq.io/interactions/v1/deploy"></script>
+</body>
+</html>
