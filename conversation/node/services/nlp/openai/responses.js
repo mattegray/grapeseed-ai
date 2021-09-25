@@ -1,5 +1,6 @@
 const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
 let dayName = days[new Date().getDay()]
+
 function getSeason() {
     let month = new Date().getMonth()
     let season
@@ -13,12 +14,109 @@ function getSeason() {
         case 8: case 9: case 10:
             season = 'Autumn'
             break
-        case 11: case 0:case 1:
+        case 11: case 0: case 1:
             season = 'Winter'
             break
     }
     return season
 }
+
+let SevenGoodDays = [{
+    question: "How many days are there in one week?",
+    answer: ["seven", "7"],
+    response: "There are seven days in one week."
+}, {
+    question: "Which day comes before Sunday?",
+    answer: "Saturday",
+    response: "It is Saturday."
+}, {
+    question: "Which day comes after Saturday?",
+    answer: "Sunday",
+    response: "It is Sunday."
+}]
+
+let TheSun = [{
+    question: "What color is the autumn sun?",
+    answer: "yellow",
+    response: "The autumn sun is yellow."
+}, {
+    question: "Is the spring sun cold?",
+    answer: ["warm", "no"],
+    response: "No. it is not. It is warm."
+}]
+
+let WhatIsThat = [{
+    question: "What is the lowest thing in the classroom?",
+    answer: "floor",
+    response: "The floor is the lowest thing in the classroom."
+}, {
+    question: "Which one is the fastest chicken?",
+    answer: "chicken",
+    response: "The black chicken in the fastest chicken."
+}, {
+    question: "What is the longest snake?",
+    answer: "this",
+    response: ""
+}]
+
+let BettyBird =[{
+    question: "What is this bird’s name?",
+    answer: "Betty",
+    response: ""
+}, {
+    question: "When does the Betty Bird make a nest?",
+    answer: "spring",
+    response: ""
+}, {
+    question: "Where does the Betty Bird make a nest?",
+    answer: "tree",
+    response: ""
+}]
+
+let JanuaryToDecember = [{
+    question: "What time of the year is it?  Is it spring, summer, autumn or winter?",
+    answer: getSeason(),
+    response: ""
+}, {
+    question: "What comes after January? ",
+    answer: "February",
+    response: ""
+}, {
+    question: "What comes after February?",
+    answer: "March",
+    response: ""
+}]
+
+let Ten = [{
+    question: "How many fingers do you have?",
+    answer: "ten",
+    response: ""
+}, {
+    question: "How many dogs do you see?",
+    answer: "ten",
+    response: ""
+}, {
+    question: "What color are the dogs?",
+    answer: "brown",
+    response: ""
+}]
+
+let TheBallGame = [{
+    question: "How many hot dogs will Charles eat?",
+    answer: "three",
+    response: ""
+}, {
+    question: "How many steps did they climb to the top? ",
+    answer: "thirty",
+    response: ""
+}, {
+    question: "Have you ever been to a ball game?",
+    answer: ["yes", "no"],
+    response: ""
+}]
+
+let incorrectAnswer = ["Nope. Try again.", "Not it."]
+
 
 let initialPrompt = "The following is a conversation with a kindergarten English teacher. " +
     "The teacher's name is Cindy, and she is very informative and insightful." +
@@ -90,7 +188,9 @@ let PhonogramWords_responses = ["Now, let's do Phonogram. ch.", "touch *", "scho
     "Repeat the following sentence: I ate a peach at school. *", "Try again: I ate a peach at school.", "Good job."]
 
 module.exports = {
-    initialPrompt, SevenGoodDays_responses, TheSun_responses, ThreeEggs_responses,
+    initialPrompt, SevenGoodDays, TheSun, WhatIsThat, BettyBird,
+    JanuaryToDecember, Ten, TheBallGame, SevenGoodDays_responses,
+    TheSun_responses, ThreeEggs_responses, incorrectAnswer,
     WhatIsThat_responses, BettyBird_responses, JanuaryToDecember_responses,
     Ten_responses, TheBallGame_responses, PhonogramWords_responses
 }
