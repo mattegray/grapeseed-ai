@@ -23,41 +23,65 @@ const UNEEQ_CONVERSATION_ID = '15ab68c3-e735-456b-965b-839d474a3524';
 // const UNEEQ_CONVERSATION_ID = '1495a3d9-56ee-4c7b-a55b-4e9c71a2c644';
 
 const msgDisplay = document.getElementById('msg');
-const iframe = document.getElementById('iframe');
+const sevenGoodDays = document.getElementById('seven-good-days');
+const theSun = document.getElementById('the-sun');
+const funAndBalloons = document.getElementById('fun-and-balloons');
+const whatIsThat = document.getElementById('what-is-that');
+const bettyBird = document.getElementById('betty-bird');
+const januaryToDecember = document.getElementById('january-to-december');
+const ten = document.getElementById('ten');
+const theBallGame = document.getElementById('the-ball-game');
+const phonogram = document.getElementById('phonogram')
 
 let uneeqInstance;
 
 document.getElementById('start-btn').addEventListener( 'click', startDigitalHuman);
 document.getElementById('end-btn').addEventListener( 'click', endSession);
 
-document.getElementById('next').addEventListener("click", ()=>uneeqInstance.sendTranscript('next'));
+sevenGoodDays.addEventListener('ended', (event)=>{
+    afterVideo('SevenGoodDays')
+});
+theSun.addEventListener('ended', (event)=>{
+    afterVideo('FunAndBalloons')
+});
+funAndBalloons.addEventListener('ended', (event)=>{
+    afterVideo('WhatIsThat')
+});
+whatIsThat.addEventListener('ended', (event)=>{
+    afterVideo('BettyBird')
+});
+bettyBird.addEventListener('ended', (event)=>{
+    afterVideo('JanuarytoDecember')
+});
+januaryToDecember.addEventListener('ended', (event)=>{
+    afterVideo('TEN')
+});
+ten.addEventListener('ended', (event)=>{
+    afterVideo('TheBallGame')
+});
+theBallGame.addEventListener('ended', (event)=>{
+    afterVideo('PhonogramWords')
+});
+phonogram.addEventListener('ended', (event)=>{
+    afterVideo('TheSun')
+});
 
-document.getElementById('welcome').addEventListener('click', ()=>uneeqInstance.sendTranscript('WELCOME'));
-document.getElementById('seven-good-days').addEventListener('click', ()=>uneeqInstance.sendTranscript('SevenGoodDays'));
-document.getElementById('the-sun').addEventListener('click', ()=>uneeqInstance.sendTranscript('TheSun'));
-document.getElementById('three-eggs').addEventListener('click', ()=>uneeqInstance.sendTranscript('ThreeEggs'));
-document.getElementById('what-is-that').addEventListener('click', ()=>uneeqInstance.sendTranscript('WhatIsThat'));
-document.getElementById('betty-bird').addEventListener('click', ()=>uneeqInstance.sendTranscript('BettyBird'));
-document.getElementById('january-to-december').addEventListener('click', ()=>uneeqInstance.sendTranscript('JanuarytoDecember'));
-document.getElementById('ten').addEventListener('click', ()=>uneeqInstance.sendTranscript('TEN'));
-document.getElementById('the-ball-game').addEventListener('click', ()=>uneeqInstance.sendTranscript('TheBallGame'));
-document.getElementById('phonogram').addEventListener('click', ()=>uneeqInstance.sendTranscript('PhonogramWords'));
-document.getElementById('goodbye').addEventListener('click', ()=>uneeqInstance.sendTranscript('GOODBYE'));
+
 
 // Add push to talk key listeners
 function addPTTKeyListeners() {
 
-    // When the user presses down on space bar, tell the digital human to start recording (start listening)
+    // When the user presses down on KeyS bar, tell the digital human to start recording (start listening)
     document.addEventListener('keydown', (e) => {
-        if (e.code === 'Space' && !e.repeat && e.target.type !== 'text') {
+        if (e.code === 'KeyS' && !e.repeat && e.target.type !== 'text') {
             // Ask uneeq-js to startRecording the users voice (to speak to the digital human)
             uneeqInstance.startRecording();
         }
     });
 
-    // When the user releases the space bar, tell the digital human to stop recording (stop listening)
+    // When the user releases the KeyS bar, tell the digital human to stop recording (stop listening)
     document.addEventListener('keyup', (e) => {
-        if (e.code === 'Space' && !e.repeat && e.target.type !== 'text') {
+        if (e.code === 'KeyS' && !e.repeat && e.target.type !== 'text') {
             // Ask uneeq-js to stopRecording the users voice (to stop speaking to the digital human)
             uneeqInstance.stopRecording();
         }
@@ -81,7 +105,7 @@ function messageHandler(msg) {
         // SessionLive: Everything has loaded and the digital human is ready for interaction
         case 'SessionLive':
 
-            // Add key listeners on spacebar for start and stop recording
+            // Add key listeners on KeyS for start and stop recording
             addPTTKeyListeners();
 
             // Clear the onscreen prompts
@@ -106,11 +130,11 @@ function messageHandler(msg) {
 
             // Add the new element onto the screen
             document.getElementById('transcript').innerHTML = 'Digital Human: ' + msg.answerSpeech;
-            if (msg.answer.includes("*")) {
-                iframe.contentWindow.postMessage('next','*');
+            if (msg.answer.includes("Hi there. Welcome to the class! Let's get started.")) {
+                setTimeout(afterQuestion, 5000)
             }
-            if (msg.answer.includes("^")) {
-                iframe.contentWindow.postMessage('play','*');
+            if (msg.answer.includes("*")) {
+                setTimeout(afterQuestion, 5000)
             }
             break;
 
@@ -123,6 +147,43 @@ function messageHandler(msg) {
     }
 }
 
+function afterQuestion() {
+    plusDivs(1)
+    window.scrollTo(0,document.body.scrollHeight)
+}
+
+function afterVideo(component) {
+    window.scrollTo(0, 0)
+    uneeqInstance.sendTranscript(component)
+}
+
+function plusDivs(n) {
+    showPage(slideIndex += n);
+}
+
+function showPage(n) {
+    let slides = document.getElementsByClassName('mySlides')
+    if (n > slides.length) {
+        slideIndex = 0
+    }
+    if (n < 0) {
+        slideIndex = slides.length
+    }
+    for (let i = 0; i < slides.length; i++) {
+        slides[i].style.display = "none";
+    }
+    slides[n].style.display = 'block';
+    slideIndex = n;
+}
+
+
+window.onmessage = function (e) {
+    if (e.data === 'next') {
+        plusDivs(1);
+    }
+};
+
+
 // Start the digital human session
 // 1. Update UI state to loading
 // 2. Get digital human single use token
@@ -130,6 +191,9 @@ function messageHandler(msg) {
 //
 // After a few seconds the digital human should be visible and ready for interaction
 function startDigitalHuman() {
+
+    let slideIndex = 0;
+    showPage(slideIndex);
 
     // Create an instance of Uneeq
     uneeqInstance = new uneeqPackage.Uneeq({

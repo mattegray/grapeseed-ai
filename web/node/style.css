@@ -1,8 +1,8 @@
 
 body {
-    margin: 0;
     background-color: black;
-    font-family: 'Roboto', Arial, sans-serif;
+    margin: 0;
+    font-family: Arial, Helvetica;
 }
 
 #local-video-container {
@@ -52,7 +52,7 @@ body {
 #start-btn {
     position: absolute;
     margin: 20px;
-    font-size: 20px;
+    font-size: 16px;
     z-index: 9;
 }
 
@@ -60,7 +60,7 @@ body {
     display: none;
     position: absolute;
     margin: 20px;
-    font-size: 20px;
+    font-size: 16px;
     z-index: 9;
 }
 .live #end-btn {
@@ -75,7 +75,6 @@ body {
     left: 20px;
     bottom: 20px;
     padding: 10px 4px;
-    display: none
 }
 
 #local-transcript {
@@ -84,4 +83,9 @@ body {
 
 #transcript:empty, #local-transcript:empty {
     display: none;
+}
+
+.mySlides {
+    display: none;
+    width: 100%;
 }

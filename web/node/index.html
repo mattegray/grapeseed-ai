@@ -1,73 +1,72 @@
 <!DOCTYPE html>
 <html>
-<title>Unit 10 Lesson 1</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<style>
-    .mySlides {
-        display: none;
-    }
-</style>
+<head>
+
+    <title>Unit 10 Lesson 1</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="style.css"/>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <script src="bundle.js" async></script>
+
+</head>
 <body>
 
-<div style="width: 100%">
-    <video class="mySlides" src="./assets/seven-good-days.mp4" style="width: 100%"></video>
-    <video class="mySlides" src="./assets/the-sun.mp4" style="width: 100%"></video>
-    <video class="mySlides" src="./assets/fun-and-balloons.mp4" style="width: 100%"></video>
-    <video class="mySlides" src="./assets/what-is-that.mp4" style="width: 100%"></video>
-    <video class="mySlides" src="./assets/betty-bird.mp4" style="width: 100%"></video>
+<!-- Button to begin. Get's a session token and starts a digital human session. -->
+<button id="start-btn" type="button" class="btn btn-outline-secondary">Start Digital Human</button>
 
+<!-- Button to end session. -->
+<button id="end-btn" type="button" class="btn btn-outline-secondary">End Session</button>
+
+<!-- msg and prompt are used for onscreen prompts and are not specific to digital human functionality -->
+<div id="msg" class="msg-display"></div>
+<div id="prompt" class="msg-display">Hold <b>space</b> to speak</div>
+
+<!--
+local-video-container and digital-human-video-container are both passed into the Uneeq class via
+UneeqOptions. Using CSS these elements can be displayed, hidden, moved, resize, etc. However, they should
+not be removed and re-added onto the DOM.
+
+local-video-container: The div element where the user's local video stream will be added.
+digital-human-video-container: The div element where the digital human's video stream will be added
+-->
+<div id="local-video-container"></div>
+
+<div id="digital-human-video-container"></div>
+<div>
+
+    <div class="mySlides" ></div>
+    <video id="seven-good-days" class="mySlides" src="./assets/seven-good-days.mp4" controls autoplay></video>
+    <video id="the-sun" class="mySlides" src="./assets/the-sun.mp4" controls autoplay></video>
+    <video id="fun-and-balloons" class="mySlides" src="./assets/fun-and-balloons.mp4"></video>
+    <video id="what-is-that" class="mySlides" src="./assets/what-is-that.mp4"></video>
+    <video id="betty-bird" class="mySlides" src="./assets/betty-bird.mp4"></video>
+    <video id="january-to-december" class="mySlides" src="./assets/january-to-december.mp4"></video>
+    <video id="ten" class="mySlides" src="./assets/ten.mp4"></video>
+    <video id="the-ball-game" class="mySlides" src="./assets/the-ball-game.mp4"></video>
+    <video id="phonogram" class="mySlides" src="./assets/phonics-ch.mp4"></video>
 
     <!--    <button class="w3-button w3-black w3-display-left" onclick="plusDivs(-1)">&#10094;</button>-->
     <!--    <button class="w3-button w3-black w3-display-right" onclick="plusDivs(1)">&#10095;</button>-->
 </div>
 
+
+<!--    <button type="button" class="btn btn-success" style="position: absolute; top: 600px; left: 12%">Start Lesson</button>-->
+
+<!--
+We will use this element to display the text of what the digital human has spoke. HTML content returned
+from the NLP could also be displayed here.
+-->
+<div id="transcript"></div>
+
+<!-- This element will be used to display the transcript of what the user has spoken. -->
+<div id="local-transcript"></div>
+
+
 <script>
-    window.uneeqInteractionsOptions = {
-        personaShareId: "66db381f-0b45-4c09-9396-5e465948d4c9",
-        enableTransparentBackground: false,
-        callToActionText: "Hi",
-        errorText: "Sorry! I'm not available right now. Please try again soon.",
-        playWelcome: false,
-        verboseLogging: false
-    }
 
-    let slideIndex = 0;
-    showPage(slideIndex);
 
-    function plusDivs(n) {
-        showPage(slideIndex += n);
-    }
 
-    function showPage(n) {
-        let slides = document.getElementsByClassName('mySlides')
-        if (n > slides.length) {
-            slideIndex = 0
-        }
-        if (n < 0) {
-            slideIndex = slides.length
-        }
-        for (let i = 0; i < slides.length; i++) {
-            slides[i].style.display = "none";
-        }
-        slides[n].style.display = 'block';
-        slideIndex = n;
-    }
-
-    function play(song) {
-        document.getElementById(song).play();
-    }
-
-    window.onmessage = function (e) {
-        if (e.data === 'next') {
-            plusDivs(1);
-        }
-        if (e.data === 'play') {
-            play();
-        }
-    };
 
 </script>
-<script src="https://hosted.us.uneeq.io/interactions/v1/deploy"></script>
 </body>
 </html>
