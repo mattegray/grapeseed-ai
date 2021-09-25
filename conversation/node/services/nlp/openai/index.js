@@ -4,6 +4,7 @@ const responses = require('./responses')
 
 // OpenAI
 const OpenAI = require('openai-api')
+const {incorrectAnswer} = require("./responses");
 const openai = new OpenAI(process.env.OPENAI_API_KEY)
 
 const components = ['WELCOME', 'SevenGoodDays', 'TheSun', 'ThreeEggs', 'WhatIsThat', 'BettyBird', 'JanuarytoDecember', 'TEN', 'TheBallGame', 'PhonogramWords', 'GOODBYE', '']
@@ -15,6 +16,11 @@ let userPrompt
 let start_sequence = "\nCindy:"
 let restart_sequence = "\nStudent: "
 
+let questionAnswered = false
+let questionAsked = false
+let questionNumber = 0
+let wrongAnswerCount = 0
+let turnPage = " Let's get going. *"
 let counter = 0
 let response = ''
 let instructions = {}
@@ -33,7 +39,7 @@ let query = async (body) => {
         case 'WELCOME':
             logger.debug('Type is WELCOME')
             sessionChatLog = ''
-            response = 'Hello there! Welcome to the class! How are you today?'
+            response = "Hi there. Welcome to the class! Let's get started."
             conversationPayload = { platformSessionId: platformSessionId, component: 'WELCOME' }
             break
 
@@ -55,10 +61,6 @@ let query = async (body) => {
                     break
                 case 'TheSun':
                     conversationPayload.component = components[2]
-                    counter = 0
-                    break
-                case 'ThreeEggs':
-                    conversationPayload.component = components[3]
                     counter = 0
                     break
                 case 'WhatIsThat':
@@ -96,13 +98,10 @@ let query = async (body) => {
             /* Return preset utterances 'lessons' for each component */
             switch (fmComponent) {
                 case 'SevenGoodDays':
-                    await iterateResponses(fmComponent, responses.SevenGoodDays_responses, 1)
+                    await askQuestions(fmComponent, fmQuestion)
                     break
                 case 'TheSun':
                     await iterateResponses(fmComponent, responses.TheSun_responses, 2)
-                    break
-                case 'ThreeEggs':
-                    await iterateResponses(fmComponent, responses.ThreeEggs_responses, 3)
                     break
                 case 'WhatIsThat':
                     await iterateResponses(fmComponent, responses.WhatIsThat_responses, 4)
@@ -179,6 +178,37 @@ async function iterateResponses(component, utterances, n) {
         }
     }
     return response
+}
+
+async function askQuestions(component, question) {
+    if (questionAsked === false) {
+        response = responses.SevenGoodDays[questionNumber].question
+        questionAsked = true
+        return response
+    }
+    while (questionAnswered === false) {
+        if (responses.SevenGoodDays[questionNumber].answer.includes(question.split)) {
+            response = `${responses.SevenGoodDays[questionNumber].response}${turnPage}`
+            questionAnswered = true
+            questionAsked = false
+        } else {
+            response = responses.incorrectAnswer[Math.floor(Math.random()*incorrectAnswer.length)]
+            wrongAnswerCount++
+        }
+        if (wrongAnswerCount > 2) {
+            response = responses.SevenGoodDays[questionNumber].response
+            wrongAnswerCount = 0
+            if (questionNumber < responses.SevenGoodDays.length) {
+                questionNumber++
+                questionAsked = false
+            } else {
+                response = `${response}${turnPage}`
+                questionAnswered = true
+                questionAsked = false
+            }
+        }
+        return response
+    }
 }
 
 module.exports = {
