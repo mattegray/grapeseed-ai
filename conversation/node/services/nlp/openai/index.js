@@ -56,11 +56,15 @@ let query = async (body) => {
                     counter = 0
                     break
                 case 'SevenGoodDays':
-                    conversationPayload.component = components[1]
+                    conversationPayload.component = 'SevenGoodDays'
                     counter = 0
                     break
                 case 'TheSun':
-                    conversationPayload.component = components[2]
+                    conversationPayload.component = 'TheSun'
+                    counter = 0
+                    break
+                case 'FunAndBalloons':
+                    conversationPayload.component = 'TheSun'
                     counter = 0
                     break
                 case 'WhatIsThat':
@@ -98,13 +102,13 @@ let query = async (body) => {
             /* Return preset utterances 'lessons' for each component */
             switch (fmComponent) {
                 case 'SevenGoodDays':
-                    await askQuestions(fmComponent, fmQuestion)
+                    await askQuestions(responses.SevenGoodDays, fmQuestion)
                     break
                 case 'TheSun':
-                    await iterateResponses(fmComponent, responses.TheSun_responses, 2)
+                    await askQuestions(responses.TheSun, fmQuestion)
                     break
                 case 'WhatIsThat':
-                    await iterateResponses(fmComponent, responses.WhatIsThat_responses, 4)
+                    await askQuestions(responses.WhatIsThat, fmQuestion)
                     break
                 case 'BettyBird':
                     await iterateResponses(fmComponent, responses.BettyBird_responses, 5)
@@ -182,30 +186,34 @@ async function iterateResponses(component, utterances, n) {
 
 async function askQuestions(component, question) {
     if (questionAsked === false) {
-        response = responses.SevenGoodDays[questionNumber].question
+        response = component[questionNumber].question
         questionAsked = true
+        console.log("Asked question")
         return response
     }
     while (questionAnswered === false) {
-        if (responses.SevenGoodDays[questionNumber].answer.includes(question.split)) {
-            response = `${responses.SevenGoodDays[questionNumber].response}${turnPage}`
+        if (component[questionNumber].answer.some(word => question.includes(word))) {
+            response = `${component[questionNumber].response}${turnPage}`
             questionAnswered = true
             questionAsked = false
+            console.log("Correct answer")
         } else {
             response = responses.incorrectAnswer[Math.floor(Math.random()*incorrectAnswer.length)]
             wrongAnswerCount++
+            console.log("Incorrect answer")
         }
-        if (wrongAnswerCount > 2) {
-            response = responses.SevenGoodDays[questionNumber].response
+        if (wrongAnswerCount === 2) {
+            response = component[questionNumber].response
             wrongAnswerCount = 0
-            if (questionNumber < responses.SevenGoodDays.length) {
-                questionNumber++
-                questionAsked = false
-            } else {
-                response = `${response}${turnPage}`
-                questionAnswered = true
-                questionAsked = false
-            }
+            questionNumber++
+            questionAsked = false
+            console.log("Next question")
+        }
+        if (questionNumber >= component.length) {
+            response = `${response}${turnPage}`
+            questionAnswered = true
+            questionNumber = 0
+            console.log("Next component")
         }
         return response
     }
