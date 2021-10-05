@@ -10,7 +10,6 @@ const openai = new OpenAI(process.env.OPENAI_API_KEY)
 const components = ['WELCOME', 'SevenGoodDays', 'TheSun', 'ThreeEggs', 'WhatIsThat', 'BettyBird', 'JanuarytoDecember', 'TEN', 'TheBallGame', 'PhonogramWords', 'GOODBYE', '']
 
 let sessionChatLog
-let whatIsThatLog = ''
 let userPrompt
 
 let start_sequence = "\nCindy:"
@@ -20,7 +19,6 @@ let questionAnswered = false
 let questionAsked = false
 let questionNumber = 0
 let wrongAnswerCount = 0
-let turnPage = " Let's get going. *"
 let counter = 0
 let response = ''
 let instructions = {}
@@ -39,7 +37,7 @@ let query = async (body) => {
         case 'WELCOME':
             logger.debug('Type is WELCOME')
             sessionChatLog = ''
-            response = "Hi there. Welcome to the class! Let's get started."
+            response = "<uneeq:excited>Hi there. Welcome to the class! Let's get started.</uneeq:excited>"
             conversationPayload = { platformSessionId: platformSessionId, component: 'WELCOME' }
             break
 
@@ -52,48 +50,37 @@ let query = async (body) => {
             /* Change the conversationPayload component based on the incoming message */
             switch (fmQuestion) {
                 case 'WELCOME':
-                    conversationPayload.component = components[0]
-                    counter = 0
+                    conversationPayload.component = 'WELCOME'
                     break
                 case 'SevenGoodDays':
                     conversationPayload.component = 'SevenGoodDays'
-                    counter = 0
                     break
                 case 'TheSun':
                     conversationPayload.component = 'TheSun'
-                    counter = 0
                     break
                 case 'FunAndBalloons':
-                    conversationPayload.component = 'TheSun'
-                    counter = 0
+                    conversationPayload.component = 'FunAndBalloons'
                     break
                 case 'WhatIsThat':
-                    conversationPayload.component = components[4]
-                    counter = 0
+                    conversationPayload.component = 'WhatIsThat'
                     break
                 case 'BettyBird':
-                    conversationPayload.component = components[5]
-                    counter = 0
+                    conversationPayload.component = 'BettyBird'
                     break
                 case 'JanuarytoDecember':
-                    conversationPayload.component = components[6]
-                    counter = 0
+                    conversationPayload.component = 'JanuarytoDecember'
                     break
                 case 'TEN':
-                    conversationPayload.component = components[7]
-                    counter = 0
+                    conversationPayload.component = 'TEN'
                     break
                 case 'TheBallGame':
-                    conversationPayload.component = components[8]
-                    counter = 0
+                    conversationPayload.component = 'TheBallGame'
                     break
-                case 'PhonogramWords':
-                    conversationPayload.component = components[9]
-                    counter = 0
+                case 'Phonics':
+                    conversationPayload.component = 'Phonics'
                     break
                 case 'GOODBYE':
-                    conversationPayload.component = components[10]
-                    counter = 0
+                    conversationPayload.component = 'GOODBYE'
                     break
                 default:
             }
@@ -107,31 +94,46 @@ let query = async (body) => {
                 case 'TheSun':
                     await askQuestions(responses.TheSun, fmQuestion)
                     break
+                case 'FunAndBalloons':
+                    await moveOn()
+                    break
                 case 'WhatIsThat':
                     await askQuestions(responses.WhatIsThat, fmQuestion)
                     break
                 case 'BettyBird':
-                    await iterateResponses(fmComponent, responses.BettyBird_responses, 5)
+                    await askQuestions(responses.BettyBird, fmQuestion)
                     break
                 case 'JanuarytoDecember':
-                    await iterateResponses(fmComponent, responses.JanuaryToDecember_responses, 6)
+                    await askQuestions(responses.JanuaryToDecember, fmQuestion)
                     break
                 case 'TEN':
-                    await iterateResponses(fmComponent, responses.Ten_responses, 7)
+                    await askQuestions(responses.Ten, fmQuestion)
                     break
                 case 'TheBallGame':
-                    await iterateResponses(fmComponent, responses.TheBallGame_responses, 8)
+                    await askQuestions(responses.TheBallGame, fmQuestion)
                     break
-                case 'PhonogramWords':
-                    await iterateResponses(fmComponent, responses.PhonogramWords_responses, 9)
+                case 'Phonics':
+                    await moveOn()
+                    break
+                case 'GOODBYE':
+                    response = "Great work! That is it for today! Do you have any questions?"
+                    conversationPayload.component = ''
                     break
                 default:
+                    /* Initialize the chat log */
+                    if (sessionChatLog === '') {
+                        sessionChatLog = `${responses.initialPrompt}${response}`
+                    }
+
                     /* Assemble the prompt */
                     userPrompt = `${sessionChatLog}${restart_sequence}${fmQuestion}${start_sequence}`
                     console.log(userPrompt)
 
                     /* GET the response */
                     response = await getOpenAIResponse(userPrompt)
+
+                    /* Add the result to the chat log */
+                    sessionChatLog = `${userPrompt}${response}`
 
                     logger.info('Got OpenAI response')
                     logger.debug(`Raw OpenAI response: ${JSON.stringify(response)}`)
@@ -142,13 +144,6 @@ let query = async (body) => {
     /* Parse the result */
     let answer = await format.parseAnswer(response)
     console.log(answer)
-
-    /* Add the result to the chat log */
-    if (sessionChatLog === '') {
-        sessionChatLog = `${responses.initialPrompt}${answer}`
-    } else {
-        sessionChatLog = `${userPrompt}${answer}`
-    }
 
     /* Return the result */
     return format.responseJSON(answer, instructions, conversationPayload)
@@ -184,37 +179,45 @@ async function iterateResponses(component, utterances, n) {
     return response
 }
 
+async function moveOn() {
+    response = responses.moveOn[counter]
+    return response
+}
+
 async function askQuestions(component, question) {
+    if (counter >= 5) {
+        counter = 0
+    }
     if (questionAsked === false) {
-        response = component[questionNumber].question
+        response = `${responses.beginning[counter]}${component[questionNumber].question}`
         questionAsked = true
         console.log("Asked question")
         return response
     }
     while (questionAnswered === false) {
-        if (component[questionNumber].answer.some(word => question.includes(word))) {
-            response = `${component[questionNumber].response}${turnPage}`
-            questionAnswered = true
+        if (component[questionNumber].answer.some(word => question.toLowerCase().includes(word.toLowerCase()))) {
+            response = `${responses.correctAnswer[counter]}${component[questionNumber].response}${responses.moveOn[counter]}`
             questionAsked = false
+            questionNumber = 0
             console.log("Correct answer")
         } else {
-            response = responses.incorrectAnswer[Math.floor(Math.random()*incorrectAnswer.length)]
+            response = responses.incorrectAnswer[counter]
             wrongAnswerCount++
             console.log("Incorrect answer")
         }
         if (wrongAnswerCount === 2) {
-            response = component[questionNumber].response
+            response = `${responses.incorrectAnswer[counter]}${component[questionNumber].response}`
             wrongAnswerCount = 0
             questionNumber++
             questionAsked = false
             console.log("Next question")
         }
         if (questionNumber >= component.length) {
-            response = `${response}${turnPage}`
-            questionAnswered = true
+            response = `${response}${responses.moveOn[counter]}`
             questionNumber = 0
             console.log("Next component")
         }
+        counter++
         return response
     }
 }
