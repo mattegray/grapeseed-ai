@@ -22,106 +22,120 @@ function getSeason() {
 }
 
 let SevenGoodDays = [{
-    question: "How many days are there in one week?",
+    question: "<uneeq:excited>How many days are there in one week?</uneeq:excited>",
     answer: ["seven", "7"],
-    response: "There are seven days in one week."
+    response: "<uneeq:excited>There are seven days in one week.</uneeq:excited>"
 }, {
-    question: "Which day comes before Sunday?",
-    answer: "Saturday",
-    response: "It is Saturday."
+    question: "<uneeq:excited>Which day comes before Sunday?</uneeq:excited>",
+    answer: ["Saturday"],
+    response: "<uneeq:excited>It is Saturday.</uneeq:excited>"
 }, {
-    question: "Which day comes after Saturday?",
-    answer: "Sunday",
-    response: "It is Sunday."
+    question: "<uneeq:excited>Which day comes after Saturday?</uneeq:excited>",
+    answer: ["Sunday"],
+    response: "<uneeq:excited>It is Sunday.</uneeq:excited>"
 }]
 
 let TheSun = [{
-    question: "What color is the autumn sun?",
-    answer: "yellow",
-    response: "The autumn sun is yellow."
+    question: "<uneeq:excited>What color is the autumn sun?</uneeq:excited>",
+    answer: ["yellow"],
+    response: "<uneeq:excited>The autumn sun is yellow.</uneeq:excited>"
 }, {
-    question: "Is the spring sun cold?",
+    question: "<uneeq:excited>Is the spring sun cold?</uneeq:excited>",
     answer: ["warm", "no"],
-    response: "No. it is not. It is warm."
+    response: "<uneeq:excited>It is warm.</uneeq:excited>"
 }]
 
 let WhatIsThat = [{
-    question: "What is the lowest thing in the classroom?",
-    answer: "floor",
-    response: "The floor is the lowest thing in the classroom."
+    question: "<uneeq:excited>What is the lowest thing in the classroom?</uneeq:excited>",
+    answer: ["floor"],
+    response: "<uneeq:excited>The floor is the lowest thing in the classroom.</uneeq:excited>"
 }, {
-    question: "Which one is the fastest chicken?",
-    answer: "chicken",
-    response: "The black chicken in the fastest chicken."
-}, {
-    question: "What is the longest snake?",
-    answer: "this",
-    response: ""
+    question: "<uneeq:excited>Which one is the fastest chicken?</uneeq:excited>",
+    answer: ["black"],
+    response: "<uneeq:excited>The black chicken is the fastest chicken.</uneeq:excited>"
 }]
 
 let BettyBird =[{
-    question: "What is this bird’s name?",
-    answer: "Betty",
-    response: ""
+    question: "<uneeq:excited>What is this bird’s name?</uneeq:excited>",
+    answer: ["Betty", "Betty bird"],
+    response: "<uneeq:excited>The bird's name is Betty Bird.</uneeq:excited>"
 }, {
-    question: "When does the Betty Bird make a nest?",
-    answer: "spring",
-    response: ""
+    question: "<uneeq:excited>When does the Betty Bird make a nest?</uneeq:excited>",
+    answer: ["spring", "in the spring", "during the spring"],
+    response: "<uneeq:excited>Betty Bird makes the nest in the spring.</uneeq:excited>"
 }, {
-    question: "Where does the Betty Bird make a nest?",
-    answer: "tree",
-    response: ""
+    question: "<uneeq:excited>Where does the Betty Bird make a nest?</uneeq:excited>",
+    answer: ["tree", "high up in the tree"],
+    response: "<uneeq:excited>Betty Bird makes the next high up in the tree.</uneeq:excited>"
 }]
 
 let JanuaryToDecember = [{
-    question: "What time of the year is it?  Is it spring, summer, autumn or winter?",
-    answer: getSeason(),
-    response: ""
+    question: "<uneeq:excited>What time of the year is it?  Is it spring, summer, autumn or winter?</uneeq:excited>",
+    answer: [getSeason()],
+    response: "<uneeq:excited>It is " + getSeason() + ".</uneeq:excited>"
 }, {
-    question: "What comes after January? ",
-    answer: "February",
-    response: ""
+    question: "<uneeq:excited>What comes after January?</uneeq:excited>",
+    answer: ["February"],
+    response: "<uneeq:excited>February comes after January.</uneeq:excited>"
 }, {
-    question: "What comes after February?",
-    answer: "March",
-    response: ""
+    question: "<uneeq:excited>What comes after February?</uneeq:excited>",
+    answer: ["March"],
+    response: "<uneeq:excited>March comes after February.</uneeq:excited>"
 }]
 
 let Ten = [{
-    question: "How many fingers do you have?",
-    answer: "ten",
-    response: ""
+    question: "<uneeq:excited>How many fingers do you have?</uneeq:excited>",
+    answer: ["ten", "10"],
+    response: "<uneeq:excited>You have ten fingers.</uneeq:excited>"
 }, {
-    question: "How many dogs do you see?",
-    answer: "ten",
-    response: ""
+    question: "<uneeq:excited>How many dogs do you see?</uneeq:excited>",
+    answer: ["ten", "10"],
+    response: "<uneeq:excited>There are ten dogs.</uneeq:excited>"
 }, {
-    question: "What color are the dogs?",
-    answer: "brown",
-    response: ""
+    question: "<uneeq:excited>What color are the dogs?</uneeq:excited>",
+    answer: ["brown"],
+    response: "<uneeq:excited>The dogs are brown.</uneeq:excited>"
 }]
 
 let TheBallGame = [{
-    question: "How many hot dogs will Charles eat?",
-    answer: "three",
-    response: ""
+    question: "<uneeq:excited>How many hot dogs will Charles eat?</uneeq:excited>",
+    answer: ["three", "3"],
+    response: "<uneeq:excited>Charles will eat all three hot dogs.</uneeq:excited>"
 }, {
-    question: "How many steps did they climb to the top? ",
-    answer: "thirty",
-    response: ""
-}, {
-    question: "Have you ever been to a ball game?",
-    answer: ["yes", "no"],
-    response: ""
+    question: "<uneeq:excited>How many steps did they climb to the top?</uneeq:excited>",
+    answer: ["thirty", "30"],
+    response: "<uneeq:excited>They climbed thirty steps.</uneeq:excited>"
 }]
 
-let incorrectAnswer = ["Nope. Try again.", "Not it."]
+let beginning = ["<uneeq:excited>Alright. I hope you were listening to Mr. Jake. </uneeq:excited>",
+    "<uneeq:excited>Were you paying attention? </uneeq:excited>",
+    "<uneeq:excited>Thanks for listening! </uneeq:excited>",
+    "<uneeq:excited>I hope you paid attention to Mr. Jake. </uneeq:excited>",
+    "<uneeq:excited>Okay. Look here. </uneeq:excited>"]
 
+let incorrectAnswer = ["<uneeq:enquiring>Oops. That is not what I expected. Please try again. </uneeq:enquiring>",
+    "<uneeq:joking>Uh Oh. Someone is not concentrating. Try to think. </uneeq:joking>",
+    "<uneeq:joking>I don't think that is the correct answer. Try again. </uneeq:joking>",
+    "<uneeq:joking>Try to remember what Mr. Jake said. Do you remember? </uneeq:joking>",
+    "<uneeq:joking>Hmm. That is not the correct answer. Please try again. </uneeq:joking>"]
+
+let moveOn = ["<uneeq:excited> Great work! Let's keep going!*</uneeq:excited>",
+    "<uneeq:excited> Good job! Let's go ahead to the next one.*</uneeq:excited>",
+    "<uneeq:excited> Okay, we are moving on! Hope you are keeping up!*</uneeq:excited>",
+    "<uneeq:excited> Shall we go to the next one? Keep up!*</uneeq:excited>",
+    "<uneeq:excited> Okay! Let's get going!*</uneeq:excited>"]
+
+let correctAnswer = ["<uneeq:excited>Great job! That is correct! </uneeq:excited>",
+    "<uneeq:excited>It looks like you are working hard today! That's right. </uneeq:excited>",
+    "<uneeq:excited>Wonderful! </uneeq:excited>",
+    "<uneeq:excited>Outstanding! That is correct! </uneeq:excited>",
+    "<uneeq:excited>Brilliant! You are right. </uneeq:excited>"]
 
 let initialPrompt = "The following is a conversation with a kindergarten English teacher. " +
     "The teacher's name is Cindy, and she is very informative and insightful." +
     "She likes to teach English and loves her students." +
-    "\n\nStudent: Hello Ms. Cindy!" +
+    "\n\nCindy: Hello everyone!! How's your day?" +
+    "\nStudent: Hello Ms. Cindy!" +
     "\nCindy: Hello! How's your day?" +
     "\nStudent: It's great." +
     "\nCindy: "
@@ -191,6 +205,7 @@ module.exports = {
     initialPrompt, SevenGoodDays, TheSun, WhatIsThat, BettyBird,
     JanuaryToDecember, Ten, TheBallGame, SevenGoodDays_responses,
     TheSun_responses, ThreeEggs_responses, incorrectAnswer,
+    moveOn, correctAnswer, beginning,
     WhatIsThat_responses, BettyBird_responses, JanuaryToDecember_responses,
     Ten_responses, TheBallGame_responses, PhonogramWords_responses
 }
