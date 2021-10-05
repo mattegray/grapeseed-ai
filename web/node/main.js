@@ -31,7 +31,12 @@ const bettyBird = document.getElementById('betty-bird');
 const januaryToDecember = document.getElementById('january-to-december');
 const ten = document.getElementById('ten');
 const theBallGame = document.getElementById('the-ball-game');
-const phonogram = document.getElementById('phonogram')
+const phonicsCh = document.getElementById('phonics-ch');
+const phonicsCk = document.getElementById('phonics-ck');
+const phonicsEr = document.getElementById('phonics-er');
+const phonicsOo = document.getElementById('phonics-oo');
+const phonicsOu = document.getElementById('phonics-ou');
+const phonicsOw = document.getElementById('phonics-ow');
 
 let uneeqInstance;
 
@@ -42,28 +47,43 @@ sevenGoodDays.addEventListener('ended', (event)=>{
     afterVideo('SevenGoodDays')
 });
 theSun.addEventListener('ended', (event)=>{
-    afterVideo('FunAndBalloons')
+    afterVideo('TheSun')
 });
 funAndBalloons.addEventListener('ended', (event)=>{
-    afterVideo('WhatIsThat')
+    afterVideo('FunAndBalloons')
 });
 whatIsThat.addEventListener('ended', (event)=>{
-    afterVideo('BettyBird')
+    afterVideo('WhatIsThat')
 });
 bettyBird.addEventListener('ended', (event)=>{
-    afterVideo('JanuarytoDecember')
+    afterVideo('BettyBird')
 });
 januaryToDecember.addEventListener('ended', (event)=>{
-    afterVideo('TEN')
+    afterVideo('JanuarytoDecember')
 });
 ten.addEventListener('ended', (event)=>{
-    afterVideo('TheBallGame')
+    afterVideo('TEN')
 });
 theBallGame.addEventListener('ended', (event)=>{
-    afterVideo('PhonogramWords')
+    afterVideo('TheBallGame')
 });
-phonogram.addEventListener('ended', (event)=>{
-    afterVideo('TheSun')
+phonicsCh.addEventListener('ended', (event)=>{
+    afterVideo('Phonics')
+});
+phonicsCk.addEventListener('ended', (event)=>{
+    afterVideo('Phonics')
+});
+phonicsEr.addEventListener('ended', (event)=>{
+    afterVideo('Phonics')
+});
+phonicsOo.addEventListener('ended', (event)=>{
+    afterVideo('Phonics')
+});
+phonicsOu.addEventListener('ended', (event)=>{
+    afterVideo('Phonics')
+});
+phonicsOw.addEventListener('ended', (event)=>{
+    afterVideo('GOODBYE')
 });
 
 
@@ -134,7 +154,7 @@ function messageHandler(msg) {
                 setTimeout(afterQuestion, 5000)
             }
             if (msg.answer.includes("*")) {
-                setTimeout(afterQuestion, 5000)
+                setTimeout(afterQuestion, 7000)
             }
             break;
 
