@@ -25,6 +25,9 @@ let instructions = {}
 let conversationPayload = {}
 let platformSessionId = ''
 
+let welcomeCount = 0
+let goodByeCount = 0
+
 let query = async (body) => {
     const fmQuestion = body['fm-question'] //question asked by user
     const fmConversation = body['fm-conversation'] //string passed in previous response 'conversationPayload'
@@ -37,7 +40,7 @@ let query = async (body) => {
         case 'WELCOME':
             logger.debug('Type is WELCOME')
             sessionChatLog = ''
-            response = "<uneeq:excited>Hi there. Welcome to the class! Let's get started.</uneeq:excited>"
+            response = "Hello there. Welcome to GrapeSEED! How are you today?"
             conversationPayload = { platformSessionId: platformSessionId, component: 'WELCOME' }
             break
 
@@ -88,6 +91,15 @@ let query = async (body) => {
 
             /* Return preset utterances 'lessons' for each component */
             switch (fmComponent) {
+                case 'WELCOME':
+                    if (welcomeCount < 5) {
+                        await chat(fmQuestion)
+                        welcomeCount++
+                        console.log(welcomeCount)
+                    } else {
+                        response = "Alright. Enough with the chitchat. Let's get started with our lesson today."
+                    }
+                    break
                 case 'SevenGoodDays':
                     await askQuestions(responses.SevenGoodDays, fmQuestion)
                     break
@@ -120,20 +132,13 @@ let query = async (body) => {
                     conversationPayload.component = ''
                     break
                 default:
-                    /* Initialize the chat log */
-                    if (sessionChatLog === '') {
-                        sessionChatLog = `${responses.initialPrompt}${response}`
+                    if (goodByeCount < 5) {
+                        await chat(fmQuestion)
+                        goodByeCount++
+                        console.log(goodByeCount)
+                    } else {
+                        response = "Alright. I think is it time for us say goodbye. See you again next time!"
                     }
-
-                    /* Assemble the prompt */
-                    userPrompt = `${sessionChatLog}${restart_sequence}${fmQuestion}${start_sequence}`
-                    console.log(userPrompt)
-
-                    /* GET the response */
-                    response = await getOpenAIResponse(userPrompt)
-
-                    /* Add the result to the chat log */
-                    sessionChatLog = `${userPrompt}${response}`
 
                     logger.info('Got OpenAI response')
                     logger.debug(`Raw OpenAI response: ${JSON.stringify(response)}`)
@@ -147,6 +152,24 @@ let query = async (body) => {
 
     /* Return the result */
     return format.responseJSON(answer, instructions, conversationPayload)
+}
+
+async function chat(question) {
+    /* Initialize the chat log */
+    if (sessionChatLog === '') {
+        sessionChatLog = `${responses.initialPrompt}${response}`
+    }
+
+    /* Assemble the prompt */
+    userPrompt = `${sessionChatLog}${restart_sequence}${question}${start_sequence}`
+    console.log(userPrompt)
+
+    /* GET the response */
+    response = await getOpenAIResponse(userPrompt)
+
+    /* Add the result to the chat log */
+    sessionChatLog = `${userPrompt}${response}`
+    return response
 }
 
 let getOpenAIResponse = async (prompt) => {
