@@ -129,6 +129,7 @@ let query = async (body) => {
                     break
                 case 'GOODBYE':
                     response = "Great work! That is it for today! Do you have any questions?"
+                    sessionChatLog = `${userPrompt}${response}`
                     conversationPayload.component = ''
                     break
                 default:
@@ -203,8 +204,12 @@ async function iterateResponses(component, utterances, n) {
 }
 
 async function moveOn() {
+    if (counter >= 5) {
+        counter = 0
+    }
     response = responses.moveOn[counter]
     return response
+    counter++
 }
 
 async function askQuestions(component, question) {
