@@ -150,8 +150,8 @@ function messageHandler(msg) {
 
             // Add the new element onto the screen
             document.getElementById('transcript').innerHTML = 'Digital Human: ' + msg.answerSpeech;
-            if (msg.answer.includes("Hi there. Welcome to the class! Let's get started.")) {
-                setTimeout(afterQuestion, 5000)
+            if (msg.answer.includes("Alright. Enough with the chitchat. Let's get started with our lesson today.")) {
+                setTimeout(afterQuestion, 7000)
             }
             if (msg.answer.includes("*")) {
                 setTimeout(afterQuestion, 7000)
