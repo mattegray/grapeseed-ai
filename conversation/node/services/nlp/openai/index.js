@@ -107,6 +107,7 @@ let query = async (body) => {
                     await askQuestions(responses.TheSun, fmQuestion)
                     break
                 case 'FunAndBalloons':
+                    counter = 0
                     await moveOn()
                     break
                 case 'WhatIsThat':
@@ -208,8 +209,8 @@ async function moveOn() {
         counter = 0
     }
     response = responses.moveOn[counter]
-    return response
     counter++
+    return response
 }
 
 async function askQuestions(component, question) {
@@ -227,6 +228,7 @@ async function askQuestions(component, question) {
             response = `${responses.correctAnswer[counter]}${component[questionNumber].response}${responses.moveOn[counter]}`
             questionAsked = false
             questionNumber = 0
+            wrongAnswerCount = 0
             console.log("Correct answer")
         } else {
             response = responses.incorrectAnswer[counter]
@@ -234,7 +236,7 @@ async function askQuestions(component, question) {
             console.log("Incorrect answer")
         }
         if (wrongAnswerCount === 2) {
-            response = `${responses.incorrectAnswer[counter]}${component[questionNumber].response}`
+            response = `${responses.incorrectAnswerEnd[counter]}${component[questionNumber].response}`
             wrongAnswerCount = 0
             questionNumber++
             questionAsked = false
@@ -243,6 +245,7 @@ async function askQuestions(component, question) {
         if (questionNumber >= component.length) {
             response = `${response}${responses.moveOn[counter]}`
             questionNumber = 0
+            wrongAnswerCount = 0
             console.log("Next component")
         }
         counter++
