@@ -24,6 +24,7 @@ let response = ''
 let instructions = {}
 let conversationPayload = {}
 let platformSessionId = ''
+let first = true
 
 let welcomeCount = 0
 let goodByeCount = 0
@@ -85,6 +86,9 @@ let query = async (body) => {
                 case 'GOODBYE':
                     conversationPayload.component = 'GOODBYE'
                     break
+                case 'ReadSentence':
+                    conversationPayload.component = 'ReadSentence'
+                    break
                 default:
             }
             fmComponent = conversationPayload.component
@@ -99,6 +103,9 @@ let query = async (body) => {
                     } else {
                         response = "Alright. Enough with the chitchat. Let's get started with our lesson today."
                     }
+                    break
+                case 'ReadSentence':
+                    await repeatSentence(fmQuestion)
                     break
                 case 'SevenGoodDays':
                     await askQuestions(responses.SevenGoodDays, fmQuestion)
@@ -209,6 +216,25 @@ async function moveOn() {
         counter = 0
     }
     response = responses.moveOn[counter]
+    counter++
+    return response
+}
+
+async function repeatSentence(question) {
+    if (counter >= 4) {
+        counter = 0
+    }
+    if (first === true) {
+        response = `${responses.nextCard[counter]}`
+        first = false
+        return response
+    }
+    if (question > 3.5){ // good pronunciation
+        response = `${responses.goodPronunciation[counter]}${responses.moveOn[counter]}`
+        first = true
+    } else { // bad pronunciation
+        response = `${responses.badPronunciation[counter]}`
+    }
     counter++
     return response
 }
