@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="style.css"/>
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="bundle.js" async></script>
 
 </head>
@@ -36,13 +37,34 @@ digital-human-video-container: The div element where the digital human's video s
 
     <div class="mySlides" ></div>
     <video id="seven-good-days" class="mySlides" src="./assets/seven-good-days.mp4" controls autoplay></video>
+    <img id="sent-seven-good-days" class="mySlides" src="./assets/pronunciation/seven-good-days.png">
+
     <video id="the-sun" class="mySlides" src="./assets/the-sun.mp4" controls autoplay></video>
+    <img id="sent-the-sun" class="mySlides" src="./assets/pronunciation/the-sun.png">
+
     <video id="fun-and-balloons" class="mySlides" src="./assets/fun-and-balloons.mp4" controls autoplay></video>
+    <img id="stomp" class="mySlides" src="./assets/pronunciation/stomp.png">
+    <img id="sent-fun-and-balloons" class="mySlides" src="./assets/pronunciation/fun-and-balloons.png">
+
     <video id="what-is-that" class="mySlides" src="./assets/what-is-that.mp4" controls autoplay></video>
+    <img id="sent-what-is-that" class="mySlides" src="./assets/pronunciation/what-is-that.png">
+
     <video id="betty-bird" class="mySlides" src="./assets/betty-bird.mp4" controls autoplay></video>
+    <img id="spring" class="mySlides" src="./assets/pronunciation/spring.png">
+    <img id="sent-betty-bird" class="mySlides" src="./assets/pronunciation/betty-bird.png">
+
     <video id="january-to-december" class="mySlides" src="./assets/january-to-december.mp4" controls autoplay></video>
+    <img id="autumn" class="mySlides" src="./assets/pronunciation/autumn.png">
+    <img id="sent-january-to-december" class="mySlides" src="./assets/pronunciation/jan-to-dec.png">
+
     <video id="ten" class="mySlides" src="./assets/ten.mp4" controls autoplay></video>
+    <img id="ground" class="mySlides" src="./assets/pronunciation/ground.png">
+    <img id="sent-ten" class="mySlides" src="./assets/pronunciation/ten.png">
+
     <video id="the-ball-game" class="mySlides" src="./assets/the-ball-game.mp4" controls autoplay></video>
+    <img id="soft" class="mySlides" src="./assets/pronunciation/soft.png">
+    <img id="sent-the-ball-game" class="mySlides" src="./assets/pronunciation/the-ball-game.png">
+
     <video id="phonics-ch" class="mySlides" src="./assets/phonics-ch.mp4" controls autoplay></video>
     <video id="phonics-ck" class="mySlides" src="./assets/phonics-ck.mp4" controls autoplay></video>
     <video id="phonics-er" class="mySlides" src="./assets/phonics-er.mp4" controls autoplay></video>
@@ -50,8 +72,15 @@ digital-human-video-container: The div element where the digital human's video s
     <video id="phonics-ou" class="mySlides" src="./assets/phonics-ou.mp4" controls autoplay></video>
     <video id="phonics-ow" class="mySlides" src="./assets/phonics-ow.mp4" controls autoplay></video>
 
-    <!--    <button class="w3-button w3-black w3-display-left" onclick="plusDivs(-1)">&#10094;</button>-->
-    <!--    <button class="w3-button w3-black w3-display-right" onclick="plusDivs(1)">&#10095;</button>-->
+    <div id="btn-talk">
+        <button id="start" class="btn-small"><i class="fa fa-play"></i></button>
+        <button id="recordButton" class="btn-small"><i class="fa fa-microphone"></i></button>
+        <button id="stopButton" disabled class="btn-small"><i class="fa fa-microphone-slash"></i></button>
+    </div>
+
+<!--        <button class="w3-button w3-black w3-display-left" onclick="plusDivs(-1)">&#10094;</button>-->
+<!--        <button class="w3-button w3-black w3-display-right" onclick="plusDivs(1)">&#10095;</button>-->
+
 </div>
 
 
@@ -66,12 +95,7 @@ from the NLP could also be displayed here.
 <!-- This element will be used to display the transcript of what the user has spoken. -->
 <div id="local-transcript"></div>
 
+<script src="https://cdn.rawgit.com/mattdiamond/Recorderjs/08e7abd9/dist/recorder.js" async></script>
 
-<script>
-
-
-
-
-</script>
 </body>
 </html>
