@@ -1,4 +1,5 @@
 const uneeqPackage = require('uneeq-js');
+const request = require("request");
 
 /*
 URL to get single use token.
@@ -22,6 +23,21 @@ This value should be the same as the one used when generating a token (above).
 const UNEEQ_CONVERSATION_ID = '15ab68c3-e735-456b-965b-839d474a3524';
 // const UNEEQ_CONVERSATION_ID = '1495a3d9-56ee-4c7b-a55b-4e9c71a2c644';
 
+const sentence = ["There are seven good days in one good week, and then it is Sunday again.",
+    "The winter sun is not.",
+    "stomp",
+    "Now drop it on the floor, and stomp on it until it pops!",
+    "Is that a long snake?",
+    "spring",
+    "In the spring, when it gets warm, I make a nest.",
+    "autumn",
+    "When autumn comes and cummer goes, leaves turn brown.",
+    "ground",
+    "They dig ten holes in the ground.",
+    "soft",
+    "How many bats and balls do you see?"]
+let counter = 0;
+
 const msgDisplay = document.getElementById('msg');
 const sevenGoodDays = document.getElementById('seven-good-days');
 const theSun = document.getElementById('the-sun');
@@ -40,53 +56,55 @@ const phonicsOw = document.getElementById('phonics-ow');
 
 let uneeqInstance;
 
-document.getElementById('start-btn').addEventListener( 'click', startDigitalHuman);
-document.getElementById('end-btn').addEventListener( 'click', endSession);
+document.getElementById('start-btn').addEventListener('click', startDigitalHuman);
+document.getElementById('end-btn').addEventListener('click', endSession);
 
-sevenGoodDays.addEventListener('ended', (event)=>{
+document.getElementById('start').addEventListener('click', (event) => {
+    uneeqInstance.sendTranscript('ReadSentence')
+});
+
+sevenGoodDays.addEventListener('ended', (event) => {
     afterVideo('SevenGoodDays')
 });
-theSun.addEventListener('ended', (event)=>{
+theSun.addEventListener('ended', (event) => {
     afterVideo('TheSun')
 });
-funAndBalloons.addEventListener('ended', (event)=>{
+funAndBalloons.addEventListener('ended', (event) => {
     afterVideo('FunAndBalloons')
 });
-whatIsThat.addEventListener('ended', (event)=>{
+whatIsThat.addEventListener('ended', (event) => {
     afterVideo('WhatIsThat')
 });
-bettyBird.addEventListener('ended', (event)=>{
+bettyBird.addEventListener('ended', (event) => {
     afterVideo('BettyBird')
 });
-januaryToDecember.addEventListener('ended', (event)=>{
+januaryToDecember.addEventListener('ended', (event) => {
     afterVideo('JanuarytoDecember')
 });
-ten.addEventListener('ended', (event)=>{
+ten.addEventListener('ended', (event) => {
     afterVideo('TEN')
 });
-theBallGame.addEventListener('ended', (event)=>{
+theBallGame.addEventListener('ended', (event) => {
     afterVideo('TheBallGame')
 });
-phonicsCh.addEventListener('ended', (event)=>{
+phonicsCh.addEventListener('ended', (event) => {
     afterVideo('Phonics')
 });
-phonicsCk.addEventListener('ended', (event)=>{
+phonicsCk.addEventListener('ended', (event) => {
     afterVideo('Phonics')
 });
-phonicsEr.addEventListener('ended', (event)=>{
+phonicsEr.addEventListener('ended', (event) => {
     afterVideo('Phonics')
 });
-phonicsOo.addEventListener('ended', (event)=>{
+phonicsOo.addEventListener('ended', (event) => {
     afterVideo('Phonics')
 });
-phonicsOu.addEventListener('ended', (event)=>{
+phonicsOu.addEventListener('ended', (event) => {
     afterVideo('Phonics')
 });
-phonicsOw.addEventListener('ended', (event)=>{
+phonicsOw.addEventListener('ended', (event) => {
     afterVideo('GOODBYE')
 });
-
-
 
 // Add push to talk key listeners
 function addPTTKeyListeners() {
@@ -156,6 +174,9 @@ function messageHandler(msg) {
             if (msg.answer.includes("*")) {
                 setTimeout(afterQuestion, 7000)
             }
+            if (msg.answer.includes("#")) {
+                counter++;
+            }
             break;
 
 
@@ -169,11 +190,11 @@ function messageHandler(msg) {
 
 function afterQuestion() {
     plusDivs(1)
-    window.scrollTo(0,document.body.scrollHeight)
+    window.scrollTo(0, document.body.scrollHeight)
 }
 
 function afterVideo(component) {
-    window.scrollTo(0, 0)
+    window.scrollTo(0,0)
     uneeqInstance.sendTranscript(component)
 }
 
@@ -195,14 +216,6 @@ function showPage(n) {
     slides[n].style.display = 'block';
     slideIndex = n;
 }
-
-
-window.onmessage = function (e) {
-    if (e.data === 'next') {
-        plusDivs(1);
-    }
-};
-
 
 // Start the digital human session
 // 1. Update UI state to loading
@@ -232,16 +245,154 @@ function startDigitalHuman() {
 
     // Get single use token from customers integration app
     fetch(GET_TOKEN_URL)
-        .then( (data) => data.json() )
-        .then( (result) => {
+        .then((data) => data.json())
+        .then((result) => {
 
             // Once a single use token has been obtained, initialise the uneeq library with it
             uneeqInstance.initWithToken(result.token);
 
         })
-        .catch( (err) => {
+        .catch((err) => {
             console.error('Could not get a token. Is your token service running?', err);
             msgDisplay.innerHTML = 'Could not get an access token. Please check developer console for details.';
         });
 
+}
+
+function pronunciation(audio, sentence) {
+    let openApiURL = 'http://aiopen.etri.re.kr:8000/WiseASR/Pronunciation';
+
+    let accessKey = '0f0fbd71-30ac-43ad-b7a1-f3612ae62b2f';
+    let languageCode = 'english';
+    let script = `${sentence}`
+
+    let requestJson = {
+        'access_key': accessKey,
+        'argument': {
+            'language_code': languageCode,
+            'script': script,
+            'audio': audio.toString('base64')
+        }
+    };
+
+    let options = {
+        url: openApiURL,
+        body: JSON.stringify(requestJson),
+        headers: {'Content-Type': 'application/json; charset=UTF-8'}
+    };
+    request.post(options, function (error, response, body) {
+        console.log('responseCode = ' + response.statusCode);
+        console.log('responseBody = ' + body);
+        let res = JSON.parse(body);
+        uneeqInstance.sendTranscript(res.return_object.score);
+    });
+
+}
+
+//webkitURL is deprecated but nevertheless
+URL = window.URL || window.webkitURL;
+
+let gumStream; 						//stream from getUserMedia()
+let rec; 							//Recorder.js object
+let input; 							//MediaStreamAudioSourceNode we'll be recording
+
+// shim for AudioContext when it's not avb.
+let AudioContext = window.AudioContext || window.webkitAudioContext;
+let audioContext //audio context to help us record
+
+let recordButton = document.getElementById("recordButton");
+let stopButton = document.getElementById("stopButton");
+
+//add events to those 2 buttons
+recordButton.addEventListener("click", startRecording);
+stopButton.addEventListener("click", stopRecording);
+
+function startRecording() {
+    console.log("recordButton clicked");
+
+    /*
+        Simple constraints object, for more advanced audio features see
+        https://addpipe.com/blog/audio-constraints-getusermedia/
+    */
+
+    let constraints = { audio: true, video:false }
+
+    /*
+       Disable the record button until we get a success or fail from getUserMedia()
+   */
+
+    recordButton.disabled = true;
+    stopButton.disabled = false;
+
+    /*
+        We're using the standard promise based getUserMedia()
+        https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia
+    */
+
+    navigator.mediaDevices.getUserMedia(constraints).then(function(stream) {
+        console.log("getUserMedia() success, stream created, initializing Recorder.js ...");
+
+        /*
+            create an audio context after getUserMedia is called
+            sampleRate might change after getUserMedia is called, like it does on macOS when recording through AirPods
+            the sampleRate defaults to the one set in your OS for your playback device
+
+        */
+        audioContext = new AudioContext({
+            sampleRate: 16000,
+        });
+
+        //update the format
+        // document.getElementById("formats").innerHTML="Format: 1 channel pcm @ "+audioContext.sampleRate/1000+"kHz"
+
+        /*  assign to gumStream for later use  */
+        gumStream = stream;
+
+        /* use the stream */
+        input = audioContext.createMediaStreamSource(stream);
+
+        /*
+            Create the Recorder object and configure to record mono sound (1 channel)
+            Recording 2 channels  will double the file size
+        */
+        rec = new Recorder(input,{numChannels:1})
+
+        //start the recording process
+        rec.record();
+
+        console.log("Recording started");
+
+    }).catch(function(err) {
+        //enable the record button if getUserMedia() fails
+        recordButton.disabled = false;
+        stopButton.disabled = true;
+    });
+}
+
+function stopRecording() {
+    console.log("stopButton clicked");
+
+    //disable the stop button, enable the record too allow for new recordings
+    stopButton.disabled = true;
+    recordButton.disabled = false;
+
+    //tell the recorder to stop the recording
+    rec.stop();
+
+    //stop microphone access
+    gumStream.getAudioTracks()[0].stop();
+
+    //create the wav blob and pass it on to createDownloadLink
+    rec.exportWAV(assessPronunciation);
+}
+
+function assessPronunciation(blob) {
+    let fileReader = new FileReader();
+    fileReader.readAsArrayBuffer(blob);
+    fileReader.onload = function(event) {
+        let arrayBuffer = fileReader.result;
+        let buffer = Buffer.from(arrayBuffer);
+        pronunciation(buffer, sentence[counter]);
+        console.log(sentence[counter]);
+    };
 }
