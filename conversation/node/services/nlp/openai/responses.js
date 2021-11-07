@@ -126,16 +126,32 @@ let incorrectAnswerEnd = ["<uneeq:enquiring>Oops. That is not what I expected. <
     "<uneeq:joking>Hmm. That is not the correct answer. </uneeq:joking> "]
 
 let moveOn = ["<uneeq:excited> Great work! Let's keep going!*</uneeq:excited> ",
-    "<uneeq:excited> Good job! Let's go ahead to the next one. Try to repeat after the words.*</uneeq:excited> ",
-    "<uneeq:excited> Okay, we are moving on! Hope you are keeping up! Listen carefully at the sounds.*</uneeq:excited> ",
+    "<uneeq:excited> Good job! Let's go ahead to the next one.*</uneeq:excited> ",
+    "<uneeq:excited> Okay, we are moving on! Hope you are keeping up!*</uneeq:excited> ",
     "<uneeq:excited> Shall we go to the next one? Keep up!*</uneeq:excited> ",
-    "<uneeq:excited> Okay! Let's get going! Look closely at the mouth.*</uneeq:excited> "]
+    "<uneeq:excited> Okay! Let's get going! You are doing great!*</uneeq:excited> "]
 
 let correctAnswer = ["<uneeq:excited>Great job! That is correct! </uneeq:excited> ",
     "<uneeq:excited>It looks like you are working hard today! That's right. </uneeq:excited> ",
     "<uneeq:excited>Wonderful! </uneeq:excited> ",
     "<uneeq:excited>Outstanding! That is correct! </uneeq:excited> ",
     "<uneeq:excited>Brilliant! You are right. </uneeq:excited> "]
+
+let badPronunciation = ["<uneeq:joking>Hmm. That sounds a little weird. Please try again.</uneeq:joking> ",
+    "<uneeq:joking>That was close, but I think you can do better. Let's try one more time.</uneeq:joking> ",
+    "<uneeq:joking>What did you say? Let's try again.</uneeq:joking> ",
+    "<uneeq:joking>I could not understand that. Can you say that one more time?</uneeq:joking> "]
+
+let goodPronunciation = ["<uneeq:excited>Your pronunciation is really great! # </uneeq:excited> ",
+    "<uneeq:excited>That sounded way better! # </uneeq:excited> ",
+    "<uneeq:excited>You are so American. # </uneeq:excited> ",
+    "<uneeq:excited>Your English pronunciation is excellent! # </uneeq:excited> "]
+
+let nextCard = ["<uneeq:excited>Read the following text.</uneeq:excited> ",
+    "<uneeq:excited>Try to read what is on the screen.</uneeq:excited> ",
+    "<uneeq:excited>Read the text out loud.</uneeq:excited> ",
+    "<uneeq:excited>Please read what is on the screen.</uneeq:excited> ",
+    "<uneeq:excited>Read the following as accurate as possible.</uneeq:excited> "]
 
 let initialPrompt = "The following is a conversation with a kindergarten English teacher. " +
     "The teacher's name is Cindy, and she is very informative and insightful." +
@@ -212,6 +228,7 @@ module.exports = {
     JanuaryToDecember, Ten, TheBallGame, SevenGoodDays_responses,
     TheSun_responses, ThreeEggs_responses, incorrectAnswer,
     moveOn, correctAnswer, beginning, incorrectAnswerEnd,
+    badPronunciation, goodPronunciation, nextCard,
     WhatIsThat_responses, BettyBird_responses, JanuaryToDecember_responses,
     Ten_responses, TheBallGame_responses, PhonogramWords_responses
 }
