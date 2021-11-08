@@ -4,7 +4,6 @@ const responses = require('./responses')
 
 // OpenAI
 const OpenAI = require('openai-api')
-const {incorrectAnswer} = require("./responses");
 const openai = new OpenAI(process.env.OPENAI_API_KEY)
 
 const components = ['WELCOME', 'SevenGoodDays', 'TheSun', 'ThreeEggs', 'WhatIsThat', 'BettyBird', 'JanuarytoDecember', 'TEN', 'TheBallGame', 'PhonogramWords', 'GOODBYE', '']
@@ -93,7 +92,7 @@ let query = async (body) => {
             }
             fmComponent = conversationPayload.component
 
-            /* Return preset utterances 'lessons' for each component */
+            /* Based on the component, ask the relevant questions or move on */
             switch (fmComponent) {
                 case 'WELCOME':
                     if (welcomeCount < 5) {
@@ -163,6 +162,8 @@ let query = async (body) => {
     return format.responseJSON(answer, instructions, conversationPayload)
 }
 
+/* Process the chat with OpenAI.
+*  Assemble and save the chat log to keep the context of the conversation. */
 async function chat(question) {
     /* Initialize the chat log */
     if (sessionChatLog === '') {
@@ -181,6 +182,7 @@ async function chat(question) {
     return response
 }
 
+/* Send prompt to OpenAI and return the completion text */
 let getOpenAIResponse = async (prompt) => {
     const gptResponse = await openai.complete({
         engine: 'davinci',
@@ -211,6 +213,7 @@ async function iterateResponses(component, utterances, n) {
     return response
 }
 
+/* Move on to the next component without asking questions */
 async function moveOn() {
     if (counter >= 5) {
         counter = 0
@@ -220,6 +223,7 @@ async function moveOn() {
     return response
 }
 
+/* Repeat the sentence until the pronunciation of the student is good enough */
 async function repeatSentence(question) {
     if (counter >= 4) {
         counter = 0
@@ -229,7 +233,7 @@ async function repeatSentence(question) {
         first = false
         return response
     }
-    if (question > 3.5){ // good pronunciation
+    if (question > 3.3){ // good pronunciation
         response = `${responses.goodPronunciation[counter]}${responses.moveOn[counter]}`
         first = true
     } else { // bad pronunciation
@@ -239,6 +243,9 @@ async function repeatSentence(question) {
     return response
 }
 
+/* Ask questions for each component.
+*  When incorrect answers are received twice in a row,
+*  just tell them the answer and ask a new question. */
 async function askQuestions(component, question) {
     if (counter >= 5) {
         counter = 0

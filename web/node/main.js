@@ -21,8 +21,8 @@ The UneeQ conversation identifier.
 This value should be the same as the one used when generating a token (above).
  */
 const UNEEQ_CONVERSATION_ID = '15ab68c3-e735-456b-965b-839d474a3524';
-// const UNEEQ_CONVERSATION_ID = '1495a3d9-56ee-4c7b-a55b-4e9c71a2c644';
 
+// Sentences to check for pronunciation assessment
 const sentence = ["There are seven good days in one good week, and then it is Sunday again.",
     "The winter sun is not.",
     "stomp",
@@ -36,6 +36,7 @@ const sentence = ["There are seven good days in one good week, and then it is Su
     "They dig ten holes in the ground.",
     "soft",
     "How many bats and balls do you see?"]
+// counter to iterate the sentences
 let counter = 0;
 
 const msgDisplay = document.getElementById('msg');
@@ -109,7 +110,7 @@ phonicsOw.addEventListener('ended', (event) => {
 // Add push to talk key listeners
 function addPTTKeyListeners() {
 
-    // When the user presses down on KeyS bar, tell the digital human to start recording (start listening)
+    // When the user presses down on the S key, tell the digital human to start recording (start listening)
     document.addEventListener('keydown', (e) => {
         if (e.code === 'KeyS' && !e.repeat && e.target.type !== 'text') {
             // Ask uneeq-js to startRecording the users voice (to speak to the digital human)
@@ -168,12 +169,15 @@ function messageHandler(msg) {
 
             // Add the new element onto the screen
             document.getElementById('transcript').innerHTML = 'Digital Human: ' + msg.answerSpeech;
+            // Start the lesson after short conversation
             if (msg.answer.includes("Alright. Enough with the chitchat. Let's get started with our lesson today.")) {
                 setTimeout(afterQuestion, 7000)
             }
+            // Go back to lesson video after asking questions
             if (msg.answer.includes("*")) {
                 setTimeout(afterQuestion, 7000)
             }
+            // Select the next pronunciation assessment sentence
             if (msg.answer.includes("#")) {
                 counter++;
             }
@@ -188,20 +192,24 @@ function messageHandler(msg) {
     }
 }
 
+// Scroll to bottom of screen after Q&A
 function afterQuestion() {
     plusDivs(1)
     window.scrollTo(0, document.body.scrollHeight)
 }
 
+// Scroll back to the top after lesson videos and pronunciation assessment
 function afterVideo(component) {
     window.scrollTo(0,0)
     uneeqInstance.sendTranscript(component)
 }
 
+// Show next page
 function plusDivs(n) {
     showPage(slideIndex += n);
 }
 
+// Show specific page
 function showPage(n) {
     let slides = document.getElementsByClassName('mySlides')
     if (n > slides.length) {
@@ -225,6 +233,7 @@ function showPage(n) {
 // After a few seconds the digital human should be visible and ready for interaction
 function startDigitalHuman() {
 
+    // Show the first page
     let slideIndex = 0;
     showPage(slideIndex);
 
@@ -259,12 +268,13 @@ function startDigitalHuman() {
 
 }
 
+// Send audio data for pronunciation assessment for the sentence
 function pronunciation(audio, sentence) {
     let openApiURL = 'http://aiopen.etri.re.kr:8000/WiseASR/Pronunciation';
 
     let accessKey = '0f0fbd71-30ac-43ad-b7a1-f3612ae62b2f';
     let languageCode = 'english';
-    let script = `${sentence}`
+    let script = `${sentence}`;
 
     let requestJson = {
         'access_key': accessKey,
@@ -284,6 +294,7 @@ function pronunciation(audio, sentence) {
         console.log('responseCode = ' + response.statusCode);
         console.log('responseBody = ' + body);
         let res = JSON.parse(body);
+        // Sent the result to UneeQ
         uneeqInstance.sendTranscript(res.return_object.score);
     });
 
@@ -342,9 +353,6 @@ function startRecording() {
             sampleRate: 16000,
         });
 
-        //update the format
-        // document.getElementById("formats").innerHTML="Format: 1 channel pcm @ "+audioContext.sampleRate/1000+"kHz"
-
         /*  assign to gumStream for later use  */
         gumStream = stream;
 
@@ -359,7 +367,6 @@ function startRecording() {
 
         //start the recording process
         rec.record();
-
         console.log("Recording started");
 
     }).catch(function(err) {
@@ -382,16 +389,23 @@ function stopRecording() {
     //stop microphone access
     gumStream.getAudioTracks()[0].stop();
 
-    //create the wav blob and pass it on to createDownloadLink
+    //create the wav blob and pass it on to assessPronunciation
     rec.exportWAV(assessPronunciation);
 }
 
+// Convert the audio blob and send to pronunciation assessment API
 function assessPronunciation(blob) {
+
+    // First convert the blob to array buffer
     let fileReader = new FileReader();
     fileReader.readAsArrayBuffer(blob);
     fileReader.onload = function(event) {
         let arrayBuffer = fileReader.result;
+
+        // Convert the array buffer to Buffer
         let buffer = Buffer.from(arrayBuffer);
+
+        // Send the buffer for assessment
         pronunciation(buffer, sentence[counter]);
         console.log(sentence[counter]);
     };
