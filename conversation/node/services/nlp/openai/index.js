@@ -233,7 +233,7 @@ async function repeatSentence(question) {
         first = false
         return response
     }
-    if (question > 3.3){ // good pronunciation
+    if (question > 3.2){ // good pronunciation
         response = `${responses.goodPronunciation[counter]}${responses.moveOn[counter]}`
         first = true
     } else { // bad pronunciation
