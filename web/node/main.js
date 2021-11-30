@@ -55,6 +55,49 @@ const phonicsOo = document.getElementById('phonics-oo');
 const phonicsOu = document.getElementById('phonics-ou');
 const phonicsOw = document.getElementById('phonics-ow');
 
+document.getElementById('1').addEventListener('click', ()=> {
+    skipComponent(1)
+});
+document.getElementById('2').addEventListener('click', ()=> {
+    skipComponent(3)
+});
+document.getElementById('3').addEventListener('click', ()=> {
+    skipComponent(5)
+});
+document.getElementById('4').addEventListener('click', ()=> {
+    skipComponent(8)
+});
+document.getElementById('5').addEventListener('click', ()=> {
+    skipComponent(10)
+});
+document.getElementById('6').addEventListener('click', ()=> {
+    skipComponent(13)
+});
+document.getElementById('7').addEventListener('click', ()=> {
+    skipComponent(16)
+});
+document.getElementById('8').addEventListener('click', ()=> {
+    skipComponent(19)
+});
+document.getElementById('9').addEventListener('click', ()=> {
+    skipComponent(22)
+});
+document.getElementById('10').addEventListener('click', ()=> {
+    skipComponent(23)
+});
+document.getElementById('11').addEventListener('click', ()=> {
+    skipComponent(24)
+});
+document.getElementById('12').addEventListener('click', ()=> {
+    skipComponent(25)
+});
+document.getElementById('13').addEventListener('click', ()=> {
+    skipComponent(26)
+});
+document.getElementById('14').addEventListener('click', ()=> {
+    skipComponent(27)
+});
+
 let uneeqInstance;
 
 document.getElementById('start-btn').addEventListener('click', startDigitalHuman);
@@ -190,6 +233,11 @@ function messageHandler(msg) {
             console.log('uneeq-js: Unhandled message \'' + msg.uneeqMessageType + '\'', msg);
             break;
     }
+}
+
+function skipComponent(n) {
+    showPage(n)
+    window.scrollTo(0, document.body.scrollHeight)
 }
 
 // Scroll to bottom of screen after Q&A
